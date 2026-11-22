@@ -48,6 +48,7 @@ export function ReelColumn({
     startY: number;
     duration: number;
   } | null>(null);
+  const quickDropRef = useRef(false);
   const currentYRef = useRef(0);
   const isAnimatingRef = useRef(false);
   const touchdownFiredRef = useRef(false);
@@ -60,11 +61,12 @@ export function ReelColumn({
   const [strip, setStrip] = useState<number[]>(() => [...symbols]);
   const [spinningVisual, setSpinningVisual] = useState(false);
 
-  const [drop, setDrop] = useState<{ symbols: number[]; duration: number; stagger: number } | null>(null);
+  const [drop, setDrop] = useState<{ round: number; symbols: number[]; duration: number; stagger: number } | null>(null);
 
   // Trigger quick-slam if user taps reels or spin button mid-spin
   useEffect(() => {
     if (slamSignal === 0 || !isAnimatingRef.current) return;
+    quickDropRef.current = true;
     if (touchdownFiredRef.current) return;
     if (slamStateRef.current?.active) return;
 
@@ -92,6 +94,7 @@ export function ReelColumn({
   useLayoutEffect(() => {
     if (spinId === 0) return;
 
+    quickDropRef.current = false;
     const prev = prevSymbolsRef.current;
     const { symbols: next, turbo } = settingsRef.current;
     const reducedMotion =
@@ -132,7 +135,7 @@ export function ReelColumn({
     currentYRef.current = startY;
 
     const anticipationMs = turbo ? 42 : 85;
-    const travelMs = turbo ? 370 + colIndex * 110 : 960 + colIndex * 230;
+    const travelMs = turbo ? 300 + colIndex * 24 : 580 + colIndex * 35;
     const settleMs = turbo ? 125 : 195;
     const overshootPx = turbo ? 18 : 26;
     const anticipationPx = turbo ? 12 : 20;
@@ -148,12 +151,10 @@ export function ReelColumn({
 
     let dropTimer: number | undefined;
     const finishColumn = () => {
-      const slam = slamStateRef.current;
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
       }
-      isAnimatingRef.current = false;
       slamStateRef.current = null;
       currentYRef.current = 0;
       prevSymbolsRef.current = next;
@@ -163,17 +164,27 @@ export function ReelColumn({
         stripRef.current.style.filter = 'none';
       }
 
-      const quick = turbo || slam !== null;
-      const duration = quick ? 280 : 580;
-      const stagger = quick ? 28 : 60;
-      setStrip(outgoing);
-      setDrop({ symbols: next, duration, stagger });
-      dropTimer = window.setTimeout(() => {
-        setStrip([...next]);
-        setDrop(null);
-        setSpinningVisual(false);
-        onSettledRef.current(colIndex);
-      }, duration + 2 * stagger + 24);
+      const playDrop = (round: number, previous: number[]) => {
+        const final = round === 5;
+        const quick = turbo || quickDropRef.current;
+        const duration = quick ? 170 : final ? 450 : 300;
+        const stagger = quick ? 15 : 35;
+        const incoming = final ? next : Array.from({ length: 3 }, drawSymbolIndex);
+        setStrip(previous);
+        setDrop({ round, symbols: incoming, duration, stagger });
+        dropTimer = window.setTimeout(() => {
+          if (!final) {
+            playDrop(round + 1, incoming);
+            return;
+          }
+          isAnimatingRef.current = false;
+          setStrip([...next]);
+          setDrop(null);
+          setSpinningVisual(false);
+          onSettledRef.current(colIndex);
+        }, duration + 2 * stagger + 35);
+      };
+      playDrop(1, outgoing);
 
       if (!touchdownFiredRef.current) {
         touchdownFiredRef.current = true;
@@ -305,7 +316,7 @@ export function ReelColumn({
 
           return (
             <div
-              key={`${spinId}-${idx}`}
+              key={`${spinId}-${drop?.round ?? 0}-${idx}`}
               className="relative flex items-center justify-center overflow-hidden"
               style={{
                 width: REEL_WIDTH,
@@ -327,6 +338,13 @@ export function ReelColumn({
                 </>
               )}
 
+              {isRestingHit && (
+                <div aria-hidden="true" className="tiger-shards pointer-events-none absolute z-[2] h-[160px] w-[160px]">
+                  {[0, 1, 2, 3].map(piece => (
+                    <img key={piece} src={sym.image} alt="" className="absolute inset-0 h-full w-full object-contain" />
+                  ))}
+                </div>
+              )}
               <img
                 style={drop ? {
                   animation: `tiger-tile-exit ${drop.duration}ms linear ${(2 - idx) * drop.stagger}ms both`,
@@ -335,7 +353,7 @@ export function ReelColumn({
                 alt={idx < 3 ? sym.label : ''}
                 draggable={false}
                 className={`pointer-events-none relative z-[1] h-[160px] w-[160px] object-contain transition-opacity duration-200 ${
-                  isRestingHit ? 'animate-win-tile' : ''
+                  isRestingHit ? 'tiger-crush-symbol' : ''
                 } ${isDimmed ? 'opacity-50' : 'opacity-100'}`}
               />
             </div>
@@ -344,7 +362,8 @@ export function ReelColumn({
       </div>
       {drop && drop.symbols.map((symbolId, row) => (
         <div
-          key={row}
+          key={`${drop.round}-${row}`}
+          data-drop-round={drop.round}
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 z-[2] flex items-center justify-center"
           style={{

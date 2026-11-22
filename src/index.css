@@ -283,3 +283,24 @@
   87% { transform: translateY(-5%) scale(.99, 1.02); }
   100% { transform: none; }
 }
+
+.tiger-crush-symbol { animation: tiger-crush 520ms ease-out both; }
+@keyframes tiger-crush {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  20% { transform: scale(1.15, .9); opacity: 1; }
+  28%, 70% { transform: scale(.7); opacity: 0; }
+}
+.tiger-shards img { animation: tiger-fragment 520ms ease-out both; }
+.tiger-shards img:nth-child(1) { clip-path: polygon(0 0, 55% 0, 48% 54%, 0 48%); --x: -34%; --y: -29%; --r: -18deg; }
+.tiger-shards img:nth-child(2) { clip-path: polygon(55% 0, 100% 0, 100% 46%, 48% 54%); --x: 32%; --y: -26%; --r: 21deg; }
+.tiger-shards img:nth-child(3) { clip-path: polygon(0 48%, 48% 54%, 54% 100%, 0 100%); --x: -32%; --y: 34%; --r: -23deg; }
+.tiger-shards img:nth-child(4) { clip-path: polygon(48% 54%, 100% 46%, 100% 100%, 54% 100%); --x: 36%; --y: 30%; --r: 18deg; }
+@keyframes tiger-fragment {
+  0%, 19% { opacity: 0; }
+  20% { opacity: 1; transform: scale(1.15, .9); }
+  86%, 100% { opacity: 0; transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(.65); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tiger-crush-symbol { animation: none; }
+  .tiger-shards { display: none; }
+}
