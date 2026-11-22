@@ -125,7 +125,7 @@ export function ReelColumn({
                 src={sym.image}
                 alt={sym.label}
                 draggable={false}
-                className={`relative h-[160px] w-[160px] object-contain ${isCrushing ? 'tiger-cascade-crush' : ''} ${won ? 'animate-win-tile' : ''} ${!isBusy && showWin && !won ? 'opacity-50' : ''}`}
+                className={`relative h-[160px] w-[160px] object-contain ${isCrushing ? 'tiger-cascade-crush' : ''} ${falling ? 'opacity-0' : ''} ${won ? 'animate-win-tile' : ''} ${!isBusy && showWin && !won ? 'opacity-50' : ''}`}
               />
               {isCrushing && <div className="tiger-cascade-sparks pointer-events-none absolute inset-0" />}
             </div>
