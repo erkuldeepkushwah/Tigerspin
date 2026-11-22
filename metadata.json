@@ -1,0 +1,6 @@
+{
+  "name": "Tiger Spins",
+  "description": "Mobile-first Tiger Spins arcade slot game featuring fluid reel physics, swipe and touch controls, animated paylines, and celebratory win effects.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

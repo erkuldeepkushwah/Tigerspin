@@ -1,0 +1,324 @@
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+  REEL_HEIGHT,
+  REEL_WIDTH,
+  SYMBOLS,
+  TILE_HEIGHT,
+  WILD_ID,
+} from '../game/constants';
+import { drawSymbolIndex } from '../game/engine';
+
+interface ReelColumnProps {
+  colIndex: number;
+  symbols: [number, number, number];
+  spinId: number;
+  turbo: boolean;
+  slamSignal: number;
+  pullOffset: number;
+  hitCells: Set<string>;
+  showWin: boolean;
+  onColumnTouchdown: (colIndex: number, hasWild: boolean) => void;
+  onColumnSettled: (colIndex: number) => void;
+}
+
+export function ReelColumn({
+  colIndex,
+  symbols,
+  spinId,
+  turbo,
+  slamSignal,
+  pullOffset,
+  hitCells,
+  showWin,
+  onColumnTouchdown,
+  onColumnSettled,
+}: ReelColumnProps) {
+  const stripRef = useRef<HTMLDivElement | null>(null);
+  const prevSymbolsRef = useRef<[number, number, number]>(symbols);
+  const activeSpinRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+
+  // Refs to coordinate smooth quick-slam without re-triggering the spin effect
+  const slamStateRef = useRef<{
+    active: boolean;
+    startTime: number;
+    startY: number;
+    duration: number;
+  } | null>(null);
+  const currentYRef = useRef(0);
+  const isAnimatingRef = useRef(false);
+  const touchdownFiredRef = useRef(false);
+
+  const onTouchdownRef = useRef(onColumnTouchdown);
+  const onSettledRef = useRef(onColumnSettled);
+  onTouchdownRef.current = onColumnTouchdown;
+  onSettledRef.current = onColumnSettled;
+
+  const [strip, setStrip] = useState<number[]>(() => [...symbols]);
+  const [spinningVisual, setSpinningVisual] = useState(false);
+
+  // Trigger quick-slam if user taps reels or spin button mid-spin
+  useEffect(() => {
+    if (slamSignal === 0 || !isAnimatingRef.current) return;
+    if (touchdownFiredRef.current) return;
+    if (slamStateRef.current?.active) return;
+
+    slamStateRef.current = {
+      active: true,
+      startTime: performance.now(),
+      startY: currentYRef.current,
+      duration: 135 + colIndex * 45,
+    };
+  }, [slamSignal, colIndex]);
+
+  // Apply gentle physical pull-down offset while idle and user drags down on reels
+  useLayoutEffect(() => {
+    if (isAnimatingRef.current) return;
+    const el = stripRef.current;
+    if (!el) return;
+    const clampedPull = Math.max(0, Math.min(40, pullOffset));
+    const staggerFactor = 0.86 + colIndex * 0.09;
+    const y = clampedPull * staggerFactor;
+    el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+    el.style.filter = 'none';
+  }, [pullOffset, colIndex]);
+
+  // Launch physics-driven 60fps reel animation whenever spinId advances
+  useEffect(() => {
+    if (spinId === 0 || spinId === activeSpinRef.current) return;
+    activeSpinRef.current = spinId;
+
+    const prev = prevSymbolsRef.current;
+    const next = symbols;
+    const reducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reducedMotion) {
+      prevSymbolsRef.current = next;
+      setStrip([...next]);
+      setSpinningVisual(false);
+      isAnimatingRef.current = false;
+      const hasWild = next.includes(WILD_ID);
+      const timer = window.setTimeout(() => {
+        onTouchdownRef.current(colIndex, hasWild);
+        onSettledRef.current(colIndex);
+      }, 90 + colIndex * 70);
+      return () => window.clearTimeout(timer);
+    }
+
+    const fillerCount = turbo ? 7 + colIndex * 3 : 12 + colIndex * 5;
+    const filler: number[] = [];
+    for (let i = 0; i < fillerCount; i++) {
+      filler.push(drawSymbolIndex());
+    }
+
+    // Strip layout: [target top..bot, ...random filler..., prev top..bot]
+    // Starting at startY shows prev exactly; ending at y = 0 shows target exactly.
+    const fullStrip = [...next, ...filler, ...prev];
+    const startY = -(fullStrip.length - 3) * TILE_HEIGHT;
+
+    setStrip(fullStrip);
+    setSpinningVisual(true);
+    isAnimatingRef.current = true;
+    touchdownFiredRef.current = false;
+    slamStateRef.current = null;
+    currentYRef.current = startY;
+
+    const anticipationMs = turbo ? 42 : 85;
+    const travelMs = turbo ? 360 + colIndex * 115 : 720 + colIndex * 235;
+    const settleMs = turbo ? 125 : 195;
+    const overshootPx = turbo ? 18 : 26;
+    const anticipationPx = turbo ? 12 : 20;
+
+    const startTime = performance.now();
+    const hasWild = next.includes(WILD_ID);
+
+    // Paint initial offset immediately before first rAF tick so there is zero flash
+    if (stripRef.current) {
+      stripRef.current.style.transform = `translate3d(0, ${startY}px, 0)`;
+      stripRef.current.style.filter = 'none';
+    }
+
+    const finishColumn = () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+      isAnimatingRef.current = false;
+      slamStateRef.current = null;
+      currentYRef.current = 0;
+      prevSymbolsRef.current = next;
+
+      if (stripRef.current) {
+        stripRef.current.style.transform = 'translate3d(0, 0px, 0)';
+        stripRef.current.style.filter = 'none';
+      }
+
+      setStrip([...next]);
+      setSpinningVisual(false);
+
+      if (!touchdownFiredRef.current) {
+        touchdownFiredRef.current = true;
+        onTouchdownRef.current(colIndex, hasWild);
+      }
+      onSettledRef.current(colIndex);
+    };
+
+    const tick = (now: number) => {
+      const el = stripRef.current;
+      if (!el) return;
+
+      const slam = slamStateRef.current;
+      let y = 0;
+      let blurPx = 0;
+
+      if (slam && slam.active) {
+        const elapsedSlam = now - slam.startTime;
+        const slamTravel = slam.duration * 0.72;
+        const slamSettle = slam.duration * 0.28;
+
+        if (elapsedSlam < slamTravel) {
+          const p = Math.min(1, elapsedSlam / slamTravel);
+          const eased = 1 - Math.pow(1 - p, 2.4);
+          y = slam.startY + (overshootPx * 0.75 - slam.startY) * eased;
+          blurPx = p < 0.7 ? 0.9 : 0;
+        } else {
+          if (!touchdownFiredRef.current) {
+            touchdownFiredRef.current = true;
+            onTouchdownRef.current(colIndex, hasWild);
+          }
+          const q = Math.min(1, (elapsedSlam - slamTravel) / slamSettle);
+          y = overshootPx * 0.75 * Math.cos(q * Math.PI * 0.5) * (1 - q * 0.25);
+          blurPx = 0;
+          if (q >= 1) {
+            finishColumn();
+            return;
+          }
+        }
+      } else {
+        const elapsed = now - startTime;
+
+        if (elapsed < anticipationMs) {
+          // Subtle upward anticipation wind-up
+          const p = elapsed / anticipationMs;
+          y = startY - Math.sin(p * Math.PI * 0.5) * anticipationPx;
+          blurPx = 0;
+        } else if (elapsed < anticipationMs + travelMs) {
+          // High-speed downward spin into overshoot peak
+          const p = (elapsed - anticipationMs) / travelMs;
+          // Smooth S-in + crisp deceleration curve
+          const eased =
+            p < 0.14
+              ? 0.08 * Math.pow(p / 0.14, 2)
+              : 0.08 + 0.92 * (1 - Math.pow(1 - (p - 0.14) / 0.86, 2.35));
+          const originY = startY - anticipationPx;
+          y = originY + (overshootPx - originY) * eased;
+
+          // Subtle motion blur only during peak velocity window
+          blurPx = p > 0.12 && p < 0.74 ? (turbo ? 1.1 : 0.85) : 0;
+        } else {
+          // Touchdown & elastic spring settle back to 0
+          if (!touchdownFiredRef.current) {
+            touchdownFiredRef.current = true;
+            onTouchdownRef.current(colIndex, hasWild);
+          }
+          const q = Math.min(1, (elapsed - anticipationMs - travelMs) / settleMs);
+          y = overshootPx * Math.cos(q * Math.PI * 0.5) * (1 - q * 0.28);
+          blurPx = 0;
+
+          if (q >= 1) {
+            finishColumn();
+            return;
+          }
+        }
+      }
+
+      currentYRef.current = y;
+      el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+      el.style.filter = blurPx > 0 ? `blur(${blurPx}px)` : 'none';
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+  }, [spinId, symbols, turbo, colIndex]);
+
+  return (
+    <div
+      className="relative overflow-hidden rounded-[12px]"
+      style={{
+        width: REEL_WIDTH,
+        height: REEL_HEIGHT,
+      }}
+    >
+      {/* Subtle top & bottom drum curvature shading for physical depth */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-black/35 to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-black/35 to-transparent"
+      />
+
+      <div
+        ref={stripRef}
+        className="will-change-transform"
+        style={{
+          transform: 'translate3d(0, 0px, 0)',
+        }}
+      >
+        {strip.map((symbolId, idx) => {
+          const sym = SYMBOLS[symbolId] ?? SYMBOLS[0];
+          const isRestingHit =
+            !spinningVisual && showWin && idx < 3 && hitCells.has(`${colIndex}-${idx}`);
+          const isDimmed =
+            !spinningVisual && showWin && hitCells.size > 0 && idx < 3 && !isRestingHit;
+
+          return (
+            <div
+              key={`${spinId}-${idx}`}
+              className="relative flex items-center justify-center"
+              style={{
+                width: REEL_WIDTH,
+                height: TILE_HEIGHT,
+              }}
+            >
+              {isRestingHit && (
+                <>
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-[6px] rounded-[16px] border-2 border-[#ffe27a] bg-[radial-gradient(circle,rgba(255,214,70,0.34)_0%,rgba(255,156,28,0.08)_72%,transparent_100%)] shadow-[inset_0_0_20px_rgba(255,220,90,0.65),0_0_22px_rgba(255,196,42,0.75)]"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-[6px] overflow-hidden rounded-[16px]"
+                  >
+                    <div className="animate-shimmer-sweep h-full w-14 bg-gradient-to-r from-transparent via-[#fff7cc]/70 to-transparent" />
+                  </div>
+                </>
+              )}
+
+              <img
+                src={sym.image}
+                alt={idx < 3 ? sym.label : ''}
+                draggable={false}
+                className={`pointer-events-none relative z-[1] h-[160px] w-[160px] object-contain transition-opacity duration-200 ${
+                  isRestingHit ? 'animate-win-tile' : ''
+                } ${isDimmed ? 'opacity-50' : 'opacity-100'}`}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
