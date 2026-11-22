@@ -273,10 +273,13 @@
   45%, 100% { transform: translateY(125%); }
 }
 
-@keyframes tiger-tile-drop {
-  0%, 12% { transform: translateY(-108%); }
-  36% { transform: translateY(-84%); }
-  68% { transform: translateY(0) scale(1.08, .90); }
-  82% { transform: translateY(-9%) scale(.97, 1.04); }
-  100% { transform: translateY(0) scale(1); }
+/* All three symbols travel a full reel height through the column viewport. */
+@keyframes tiger-column-fall {
+  0% {
+    transform: translateY(-300%);
+    animation-timing-function: cubic-bezier(.38, .02, .78, .52);
+  }
+  76% { transform: translateY(0) scale(1.045, .95); }
+  87% { transform: translateY(-5%) scale(.99, 1.02); }
+  100% { transform: none; }
 }

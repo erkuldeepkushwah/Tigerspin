@@ -164,8 +164,8 @@ export function ReelColumn({
       }
 
       const quick = turbo || slam !== null;
-      const duration = quick ? 180 : 380;
-      const stagger = quick ? 24 : 65;
+      const duration = quick ? 280 : 580;
+      const stagger = quick ? 28 : 60;
       setStrip(outgoing);
       setDrop({ symbols: next, duration, stagger });
       dropTimer = window.setTimeout(() => {
@@ -338,18 +338,24 @@ export function ReelColumn({
                   isRestingHit ? 'animate-win-tile' : ''
                 } ${isDimmed ? 'opacity-50' : 'opacity-100'}`}
               />
-              {drop && (
-                <div
-                  className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center"
-                  style={{ animation: `tiger-tile-drop ${drop.duration}ms linear ${(2 - idx) * drop.stagger}ms both` }}
-                >
-                  <img className="h-[160px] w-[160px] object-contain" src={SYMBOLS[drop.symbols[idx]].image} alt="" />
-                </div>
-              )}
             </div>
           );
         })}
       </div>
+      {drop && drop.symbols.map((symbolId, row) => (
+        <div
+          key={row}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 z-[2] flex items-center justify-center"
+          style={{
+            top: row * TILE_HEIGHT,
+            height: TILE_HEIGHT,
+            animation: `tiger-column-fall ${drop.duration}ms linear ${(2 - row) * drop.stagger}ms both`,
+          }}
+        >
+          <img className="h-[160px] w-[160px] object-contain" src={SYMBOLS[symbolId].image} alt="" />
+        </div>
+      ))}
     </div>
   );
 }
