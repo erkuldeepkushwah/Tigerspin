@@ -60,6 +60,8 @@ export function ReelColumn({
   const [strip, setStrip] = useState<number[]>(() => [...symbols]);
   const [spinningVisual, setSpinningVisual] = useState(false);
 
+  const [drop, setDrop] = useState<{ symbols: number[]; duration: number; stagger: number } | null>(null);
+
   // Trigger quick-slam if user taps reels or spin button mid-spin
   useEffect(() => {
     if (slamSignal === 0 || !isAnimatingRef.current) return;
@@ -117,7 +119,8 @@ export function ReelColumn({
 
     // Strip layout: [target top..bot, ...random filler..., prev top..bot]
     // Starting at startY shows prev exactly; the guard tiles cover the window during wind-up and bounce.
-    const fullStrip = [drawSymbolIndex(), ...next, ...filler, ...prev, drawSymbolIndex()];
+    const outgoing = [drawSymbolIndex(), drawSymbolIndex(), drawSymbolIndex()];
+    const fullStrip = [drawSymbolIndex(), ...outgoing, ...filler, ...prev, drawSymbolIndex()];
     const landingY = -TILE_HEIGHT;
     const startY = -(fullStrip.length - 4) * TILE_HEIGHT;
 
@@ -143,7 +146,9 @@ export function ReelColumn({
       stripRef.current.style.filter = 'none';
     }
 
+    let dropTimer: number | undefined;
     const finishColumn = () => {
+      const slam = slamStateRef.current;
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
@@ -158,14 +163,22 @@ export function ReelColumn({
         stripRef.current.style.filter = 'none';
       }
 
-      setStrip([...next]);
-      setSpinningVisual(false);
+      const quick = turbo || slam !== null;
+      const duration = quick ? 180 : 380;
+      const stagger = quick ? 24 : 65;
+      setStrip(outgoing);
+      setDrop({ symbols: next, duration, stagger });
+      dropTimer = window.setTimeout(() => {
+        setStrip([...next]);
+        setDrop(null);
+        setSpinningVisual(false);
+        onSettledRef.current(colIndex);
+      }, duration + 2 * stagger + 24);
 
       if (!touchdownFiredRef.current) {
         touchdownFiredRef.current = true;
         onTouchdownRef.current(colIndex, hasWild);
       }
-      onSettledRef.current(colIndex);
     };
 
     const tick = (now: number) => {
@@ -250,6 +263,7 @@ export function ReelColumn({
     rafRef.current = requestAnimationFrame(tick);
 
     return () => {
+      window.clearTimeout(dropTimer);
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
@@ -292,7 +306,7 @@ export function ReelColumn({
           return (
             <div
               key={`${spinId}-${idx}`}
-              className="relative flex items-center justify-center"
+              className="relative flex items-center justify-center overflow-hidden"
               style={{
                 width: REEL_WIDTH,
                 height: TILE_HEIGHT,
@@ -314,6 +328,9 @@ export function ReelColumn({
               )}
 
               <img
+                style={drop ? {
+                  animation: `tiger-tile-exit ${drop.duration}ms linear ${(2 - idx) * drop.stagger}ms both`,
+                } : undefined}
                 src={sym.image}
                 alt={idx < 3 ? sym.label : ''}
                 draggable={false}
@@ -321,6 +338,14 @@ export function ReelColumn({
                   isRestingHit ? 'animate-win-tile' : ''
                 } ${isDimmed ? 'opacity-50' : 'opacity-100'}`}
               />
+              {drop && (
+                <div
+                  className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center"
+                  style={{ animation: `tiger-tile-drop ${drop.duration}ms linear ${(2 - idx) * drop.stagger}ms both` }}
+                >
+                  <img className="h-[160px] w-[160px] object-contain" src={SYMBOLS[drop.symbols[idx]].image} alt="" />
+                </div>
+              )}
             </div>
           );
         })}
