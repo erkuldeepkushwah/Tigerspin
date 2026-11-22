@@ -27,3 +27,33 @@
 @media (prefers-reduced-motion: reduce) {
   .tiger-cascade-crush, .tiger-cascade-sparks { animation: none !important; }
 }
+
+/* Reference: bottom fruit row stays on the board while upper two rows vanish. */
+@keyframes tiger-reference-cascade-drop {
+  0% { transform: translate3d(0,-570px,0) scale(.88,1.14); opacity: .7; filter: blur(3px); }
+  55% { opacity: 1; filter: blur(1px); }
+  78% { transform: translate3d(0,17px,0) scale(1.06,.87); filter: none; }
+  89% { transform: translate3d(0,-11px,0) scale(.97,1.04); }
+  100% { transform: translate3d(0,0,0) scale(1); opacity: 1; filter: none; }
+}
+@keyframes tiger-reference-crush {
+  0% { transform: scale(1); filter: brightness(1); opacity: 1; }
+  30% { transform: scale(1.18,.86); filter: brightness(2); opacity: 1; }
+  65% { transform: scale(.6) rotate(12deg); filter: brightness(2.5); opacity: .3; }
+  100% { transform: scale(.12) rotate(26deg); opacity: 0; }
+}
+.tiger-reference-crush { animation: tiger-reference-crush 230ms ease-in both; }
+@keyframes tiger-reference-sparkle {
+  0% { opacity: 0; transform: scale(.6); }
+  28% { opacity: .92; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+.tiger-reference-sparkles {
+  background: radial-gradient(circle at 35% 36%, #fff7cc 0 3%, transparent 10%),
+    radial-gradient(circle at 65% 52%, #ffd867 0 3%, transparent 12%),
+    radial-gradient(circle at 46% 75%, #fff1aa 0 2%, transparent 10%);
+  animation: tiger-reference-sparkle 250ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tiger-reference-crush, .tiger-reference-sparkles { animation: none !important; }
+}
