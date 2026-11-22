@@ -756,7 +756,17 @@ export default function App() {
           }`}
           style={HOTSPOTS.spin}
         >
-          {/* Orbiting golden ring while reels are spinning */}
+          {spinning && (
+            <span
+              aria-hidden="true"
+              className={`pointer-events-none absolute inset-0 rounded-full ${turbo ? 'animate-spin-orbit-fast' : 'animate-spin-orbit'}`}
+              style={{
+                backgroundImage: `url(${ASSETS.board})`,
+                backgroundSize: `${BOARD_WIDTH}px ${BOARD_HEIGHT}px`,
+                backgroundPosition: `-${HOTSPOTS.spin.left}px -${HOTSPOTS.spin.top}px`,
+              }}
+            />
+          )}
           {spinning && (
             <span
               aria-hidden="true"

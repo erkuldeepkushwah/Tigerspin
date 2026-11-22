@@ -35,7 +35,10 @@ export function ReelColumn({
 }: ReelColumnProps) {
   const stripRef = useRef<HTMLDivElement | null>(null);
   const prevSymbolsRef = useRef<[number, number, number]>(symbols);
-  const activeSpinRef = useRef(0);
+  const settingsRef = useRef({ symbols, turbo });
+  useLayoutEffect(() => {
+    settingsRef.current = { symbols, turbo };
+  }, [symbols, turbo]);
   const rafRef = useRef<number | null>(null);
 
   // Refs to coordinate smooth quick-slam without re-triggering the spin effect
@@ -84,12 +87,11 @@ export function ReelColumn({
   }, [pullOffset, colIndex]);
 
   // Launch physics-driven 60fps reel animation whenever spinId advances
-  useEffect(() => {
-    if (spinId === 0 || spinId === activeSpinRef.current) return;
-    activeSpinRef.current = spinId;
+  useLayoutEffect(() => {
+    if (spinId === 0) return;
 
     const prev = prevSymbolsRef.current;
-    const next = symbols;
+    const { symbols: next, turbo } = settingsRef.current;
     const reducedMotion =
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -114,9 +116,10 @@ export function ReelColumn({
     }
 
     // Strip layout: [target top..bot, ...random filler..., prev top..bot]
-    // Starting at startY shows prev exactly; ending at y = 0 shows target exactly.
-    const fullStrip = [...next, ...filler, ...prev];
-    const startY = -(fullStrip.length - 3) * TILE_HEIGHT;
+    // Starting at startY shows prev exactly; the guard tiles cover the window during wind-up and bounce.
+    const fullStrip = [drawSymbolIndex(), ...next, ...filler, ...prev, drawSymbolIndex()];
+    const landingY = -TILE_HEIGHT;
+    const startY = -(fullStrip.length - 4) * TILE_HEIGHT;
 
     setStrip(fullStrip);
     setSpinningVisual(true);
@@ -126,7 +129,7 @@ export function ReelColumn({
     currentYRef.current = startY;
 
     const anticipationMs = turbo ? 42 : 85;
-    const travelMs = turbo ? 360 + colIndex * 115 : 720 + colIndex * 235;
+    const travelMs = turbo ? 370 + colIndex * 110 : 960 + colIndex * 230;
     const settleMs = turbo ? 125 : 195;
     const overshootPx = turbo ? 18 : 26;
     const anticipationPx = turbo ? 12 : 20;
@@ -181,7 +184,7 @@ export function ReelColumn({
         if (elapsedSlam < slamTravel) {
           const p = Math.min(1, elapsedSlam / slamTravel);
           const eased = 1 - Math.pow(1 - p, 2.4);
-          y = slam.startY + (overshootPx * 0.75 - slam.startY) * eased;
+          y = slam.startY + (landingY + overshootPx * 0.75 - slam.startY) * eased;
           blurPx = p < 0.7 ? 0.9 : 0;
         } else {
           if (!touchdownFiredRef.current) {
@@ -189,7 +192,7 @@ export function ReelColumn({
             onTouchdownRef.current(colIndex, hasWild);
           }
           const q = Math.min(1, (elapsedSlam - slamTravel) / slamSettle);
-          y = overshootPx * 0.75 * Math.cos(q * Math.PI * 0.5) * (1 - q * 0.25);
+          y = landingY + overshootPx * 0.75 * Math.cos(q * Math.PI * 0.5) * (1 - q * 0.25);
           blurPx = 0;
           if (q >= 1) {
             finishColumn();
@@ -207,13 +210,16 @@ export function ReelColumn({
         } else if (elapsed < anticipationMs + travelMs) {
           // High-speed downward spin into overshoot peak
           const p = (elapsed - anticipationMs) / travelMs;
-          // Smooth S-in + crisp deceleration curve
-          const eased =
-            p < 0.14
-              ? 0.08 * Math.pow(p / 0.14, 2)
-              : 0.08 + 0.92 * (1 - Math.pow(1 - (p - 0.14) / 0.86, 2.35));
+          // Integrate a speed curve with acceleration, cruise, then braking.
+          const ramp = 0.18;
+          const brake = 0.36;
+          const cruiseEnd = 1 - brake;
+          const distance = 1 - (ramp + brake) / 2;
+          let eased = (p - ramp / 2) / distance;
+          if (p < ramp) eased = p * p / (2 * ramp * distance);
+          if (p > cruiseEnd) eased = 1 - (1 - p) ** 2 / (2 * brake * distance);
           const originY = startY - anticipationPx;
-          y = originY + (overshootPx - originY) * eased;
+          y = originY + (landingY + overshootPx - originY) * eased;
 
           // Subtle motion blur only during peak velocity window
           blurPx = p > 0.12 && p < 0.74 ? (turbo ? 1.1 : 0.85) : 0;
@@ -224,7 +230,7 @@ export function ReelColumn({
             onTouchdownRef.current(colIndex, hasWild);
           }
           const q = Math.min(1, (elapsed - anticipationMs - travelMs) / settleMs);
-          y = overshootPx * Math.cos(q * Math.PI * 0.5) * (1 - q * 0.28);
+          y = landingY + overshootPx * Math.cos(q * Math.PI * 0.5) * (1 - q * 0.28);
           blurPx = 0;
 
           if (q >= 1) {
@@ -249,7 +255,7 @@ export function ReelColumn({
         rafRef.current = null;
       }
     };
-  }, [spinId, symbols, turbo, colIndex]);
+  }, [spinId, colIndex]);
 
   return (
     <div
