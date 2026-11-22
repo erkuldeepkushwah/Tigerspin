@@ -1,0 +1,29 @@
+/* Reference-video cascades: symbol bursts, sky-to-board drops, and soft impact. */
+@keyframes tiger-reference-drop {
+  0% { transform: translate3d(0,-640px,0) scale(.9,1.13); opacity: .7; filter: blur(4px); }
+  52% { opacity: 1; filter: blur(1.5px); }
+  78% { transform: translate3d(0,15px,0) scale(1.06,.88); filter: none; }
+  88% { transform: translate3d(0,-12px,0) scale(.97,1.04); }
+  100% { transform: translate3d(0,0,0) scale(1); opacity: 1; filter: none; }
+}
+@keyframes tiger-cascade-burst {
+  0% { transform: scale(1); opacity: 1; filter: brightness(1); }
+  28% { transform: scale(1.2,.85); opacity: 1; filter: brightness(1.85); }
+  58% { transform: scale(.62) rotate(8deg); opacity: .35; filter: brightness(2.2); }
+  100% { transform: scale(.18) rotate(20deg); opacity: 0; }
+}
+.tiger-cascade-crush { animation: tiger-cascade-burst 195ms ease-in both; }
+@keyframes tiger-cascade-sparks {
+  0%, 100% { opacity: 0; transform: scale(.7); }
+  25% { opacity: .95; transform: scale(1); }
+  70% { opacity: .1; transform: scale(1.4); }
+}
+.tiger-cascade-sparks {
+  background: radial-gradient(circle, #fff7c7 0 3%, #ffd259 4% 7%, transparent 30%),
+    radial-gradient(circle at 20% 35%, #fff0a0 0 3%, transparent 7%),
+    radial-gradient(circle at 80% 63%, #fff0a0 0 3%, transparent 7%);
+  animation: tiger-cascade-sparks 195ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tiger-cascade-crush, .tiger-cascade-sparks { animation: none !important; }
+}
