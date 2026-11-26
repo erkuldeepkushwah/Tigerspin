@@ -137,13 +137,14 @@ export function WinCelebration({
         alt={tier === 'super' ? 'Super Mega Win' : tier === 'big' ? 'Big Win' : 'Mega Win'}
         draggable={false}
         className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+        style={tier === 'big' ? { clipPath: 'inset(0 0 28% 0)' } : undefined}
       />
 
       {tier === 'super' && <img src="/assets/icons/super-mega-win-assets/super-mega-win.png.svg" alt="" className="pointer-events-none absolute left-[12%] top-[24%] w-[76%] object-contain" />}
       {/* Individual uploaded artwork accents, separate from the full cabinet overlay. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {tier === 'big' ? <>
-          <img src="/assets/icons/big%20win/golden-bull.png.svg" alt="" className="tiger-win-character absolute left-[5%] top-[11%] h-[13%] w-[24%] object-contain" />
+          <img src="/assets/icons/big%20win/golden-bull.png.svg" alt="" draggable={false} className="tiger-win-character absolute left-[15%] top-[66%] h-[24%] w-[70%] object-contain" />
           <img src="/assets/icons/big%20win/coin-stack.png.svg" alt="" className="absolute bottom-[20%] right-[5%] h-[8%] w-[18%] object-contain" />
         </> : tier === 'mega' ? <>
           <img src="/assets/icons/mega%20win/pink-petal.png.svg" alt="" className="absolute left-[5%] top-[17%] h-[6%] w-[12%] object-contain" />
@@ -217,7 +218,7 @@ export function WinCelebration({
       {/* Subtle tap-to-continue cue */}
       <div
         className="pointer-events-none absolute left-0 w-full text-center"
-        style={{ top: 1090 }}
+        style={{ top: tier === 'big' ? 1340 : 1090 }}
       >
         <span className="inline-block rounded-full border border-[#ffe28c]/45 bg-[#2a0c06]/80 px-6 py-2 text-[20px] font-bold tracking-[0.16em] text-[#ffe9b4]/90 shadow-lg">
           TAP TO CONTINUE
