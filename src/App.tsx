@@ -558,6 +558,11 @@ export default function App() {
           className="pointer-events-none absolute inset-0 h-full w-full select-none"
         />
 
+        {/* Cover baked-in symbols and control artwork; only live SVG icons are visible. */}
+        <div aria-hidden="true" className="pointer-events-none absolute" style={{top: REEL_TOP, left: REEL_LEFT, width: REELS_TOTAL_WIDTH, height: REEL_HEIGHT, borderRadius: 12, background: 'linear-gradient(90deg,#d9a96b,#fff2ce 12%,#fce9bb 88%,#d9a96b)'}} />
+        {Object.entries(HOTSPOTS).map(([key, rect]) => (
+          <div key={key} aria-hidden="true" className="pointer-events-none absolute" style={{...rect, borderRadius: '50%', background: 'radial-gradient(ellipse at 50% 35%, #8d291b, #4b100c 75%)', boxShadow: '0 0 0 3px #a76b32'}} />
+        ))}
         {/* 3 Fluid Physics Reel Columns */}
         <div
           className="absolute flex"
