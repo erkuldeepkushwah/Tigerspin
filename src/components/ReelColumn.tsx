@@ -23,7 +23,7 @@ export function ReelColumn({
   hitCells, showWin, onColumnTouchdown, onColumnSettled,
 }: ReelColumnProps) {
   const [cells, setCells] = useState<[number, number, number]>(symbols);
-  const [incoming, setIncoming] = useState<[number, number]>([symbols[0], symbols[1]]);
+  const [incoming, setIncoming] = useState<[number, number, number]>(symbols);
   const [phase, setPhase] = useState<Phase>('idle');
   const [wave, setWave] = useState(0);
   const desiredRef = useRef(symbols);
@@ -65,28 +65,25 @@ export function ReelColumn({
       return () => { clear(); busyRef.current = false; };
     }
 
-    // Reference clip: the LOWEST ROW remains anchored on screen while the
-    // upper symbols burst into sparkles, leave blank slots and drop from above.
-    // Five visibly distinct cascades precede the predetermined final result.
-    setCells([drawSymbolIndex(), drawSymbolIndex(), finalGrid[2]]);
+    // All three rows participate in each of the five cascades.
     const cascade = (n: number) => {
       const last = n === DROP_COUNT;
       const quick = speedRef.current || fastRef.current;
       const crushTime = quick ? 120 : 240;
       const emptyTime = quick ? 55 : 100;
-      const fallTime = quick ? 300 : 540;
-      const newTop: [number, number] = last
-        ? [finalGrid[0], finalGrid[1]]
-        : [drawSymbolIndex(), drawSymbolIndex()];
+      const fallTime = quick ? 330 : 580;
+      const nextCells: [number, number, number] = last
+        ? finalGrid
+        : [drawSymbolIndex(), drawSymbolIndex(), drawSymbolIndex()];
       setWave(n);
       setPhase('crush');
       later(() => {
         setPhase('empty');
         later(() => {
-          setIncoming(newTop);
+          setIncoming(nextCells);
           setPhase('falling');
           later(() => {
-            setCells([newTop[0], newTop[1], finalGrid[2]]);
+            setCells(nextCells);
             setPhase('landed');
             if (last) cbRef.current.onColumnTouchdown(colIndex, finalGrid.includes(WILD_ID));
             later(() => {
@@ -107,7 +104,7 @@ export function ReelColumn({
   }, [spinId, colIndex]);
 
   const busy = phase !== 'idle';
-  const hideTop = phase === 'empty' || phase === 'falling';
+  const hideCells = phase === 'empty' || phase === 'falling';
   const quick = turbo || fastRef.current;
   return (
     <div className="relative overflow-hidden rounded-[12px]" style={{ width: REEL_WIDTH, height: REEL_HEIGHT }}>
@@ -116,8 +113,8 @@ export function ReelColumn({
         {cells.map((id, row) => {
           const symbol = SYMBOLS[id] || SYMBOLS[0];
           const won = !busy && showWin && hitCells.has(`${colIndex}-${row}`);
-          const invisible = row < 2 && hideTop;
-          const crushing = row < 2 && phase === 'crush';
+          const invisible = hideCells;
+          const crushing = phase === 'crush';
           return (
             <div key={row} className="relative flex items-center justify-center overflow-hidden" style={{ height: TILE_HEIGHT, '--crush-duration': quick ? '120ms' : '240ms' } as React.CSSProperties}>
               {won && <div className="pointer-events-none absolute inset-2 rounded-xl border-2 border-[#ffe27a] bg-amber-300/15 shadow-[0_0_25px_#ffd65c]" />}
@@ -140,7 +137,7 @@ export function ReelColumn({
           style={{
             top: row * TILE_HEIGHT,
             height: TILE_HEIGHT,
-            animation: `tiger-reference-cascade-drop ${quick ? 280 : 510}ms cubic-bezier(.25,.55,.35,1) ${row === 0 ? 0 : quick ? 18 : 30}ms both`,
+            animation: `tiger-reference-cascade-drop ${quick ? 280 : 510}ms cubic-bezier(.25,.55,.35,1) ${row * (quick ? 18 : 30)}ms both`,
           }}
         >
           <img src={(SYMBOLS[id] || SYMBOLS[0]).image} alt="" draggable={false} className="tiger-reel-icon object-contain" />
