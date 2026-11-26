@@ -159,9 +159,27 @@ export function WinCelebration({
         </div>
       ) : (
         <>
-          <div className="pointer-events-none absolute left-[5%] top-[23%] h-[49%] w-[90%] rounded-[64px] border-[10px] border-[#f8cd58] shadow-[0_0_55px_#ffbb37,inset_0_0_30px_#b76111]" style={{background:'radial-gradient(ellipse at 50% 42%,#fff5bd,#fbd35d 55%,#ac5014)'}} />
-          <img src="/assets/icons/super-mega-win-assets/tiger-character.svg" alt="" draggable={false} className="tiger-win-character pointer-events-none absolute left-[23%] top-[12%] h-[29%] w-[54%] object-contain" />
-          <div className="font-cabinet-display pointer-events-none absolute left-[8%] top-[43%] w-[84%] text-center text-[68px] font-black leading-tight" style={{color:'#fff6b2',textShadow:'0 5px 0 #914008, 0 0 18px #b34d09'}}>{tier === 'super' ? 'SUPER MEGA WIN' : 'MEGA WIN'}</div>
+          <svg viewBox="0 0 674 1462" className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
+            <defs>
+              <radialGradient id="tigerPrizeGlow"><stop stopColor="#fffde0"/><stop offset=".5" stopColor="#fff18b"/><stop offset=".8" stopColor="#ffba49"/><stop offset="1" stopColor="#f56855" stopOpacity=".9"/></radialGradient>
+              <linearGradient id="tigerRailGold" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#fff2a3"/><stop offset=".3" stopColor="#d88720"/><stop offset=".55" stopColor="#ffdc76"/><stop offset="1" stopColor="#965019"/></linearGradient>
+              <pattern id="tigerRailPattern" width="32" height="18" patternUnits="userSpaceOnUse"><path d="M-16 18Q0-10 16 18Q32-10 48 18M-8 18Q8 0 24 18" fill="none" stroke="#ff9267" strokeWidth="2" opacity=".5"/></pattern>
+            </defs>
+            <path d="M337 300Q430 270 501 330Q590 300 620 390Q690 415 663 500L663 940Q690 1030 605 1052Q560 1140 465 1094Q337 1195 209 1094Q114 1140 69 1052Q-16 1030 11 940V500Q-16 415 54 390Q84 300 173 330Q244 270 337 300Z" fill="url(#tigerPrizeGlow)" stroke="#ffb28a" strokeWidth="5"/>
+            <circle cx="337" cy="735" r="283" fill="none" stroke="#fff7ba" strokeWidth="14" strokeDasharray="19 7" opacity=".7"/>
+            <g stroke="url(#tigerRailGold)" strokeWidth="11" strokeLinejoin="round">
+              <path d="M24 488L49 458Q85 523 163 495Q260 465 337 498Q414 465 511 495Q589 523 625 458L650 488L628 569H46Z" fill="#b21d26"/>
+              <path d="M24 488L49 458Q85 523 163 495Q260 465 337 498Q414 465 511 495Q589 523 625 458L650 488L628 569H46Z" fill="url(#tigerRailPattern)" stroke="none"/>
+              <path d="M25 938Q110 916 205 946L337 979L469 946Q564 916 649 938L632 1002Q549 970 468 1016L337 1055L206 1016Q125 970 42 1002Z" fill="#b21d26"/>
+              <path d="M25 938Q110 916 205 946L337 979L469 946Q564 916 649 938L632 1002Q549 970 468 1016L337 1055L206 1016Q125 970 42 1002Z" fill="url(#tigerRailPattern)" stroke="none"/>
+              <path d="M283 970H391L425 1034L391 1100H283L249 1034Z" fill="#b92026"/>
+            </g>
+            <text x="337" y="1060" textAnchor="middle" fontSize="62" fontWeight="bold" fill="#ffdf77">虎</text>
+          </svg>
+          <img src={tier === 'super' ? '/assets/icons/super-mega-win-assets/tiger-character.png.svg' : '/assets/icons/mega%20win/tiger-character.png.svg'} alt="" draggable={false} className="tiger-win-character pointer-events-none absolute left-[16%] top-[17%] h-[25%] w-[68%] object-contain" style={{maskImage:'radial-gradient(ellipse at 50% 48%, black 53%, transparent 74%)'}} />
+          <div className="pointer-events-none absolute left-[4%] top-[42%] w-[92%] text-center font-black italic leading-[.93]" style={{fontSize:tier === 'super'?88:100,color:'#ffe294',WebkitTextStroke:'5px #7230a3',paintOrder:'stroke fill',textShadow:'0 7px 0 #54217a,0 0 14px #ffcf70'}}>
+            {tier === 'super' ? <>SUPER<br/>MEGA WIN</> : 'MEGA WIN'}
+          </div>
         </>
       )}
       <style>{`@keyframes tigerWinDance { 0%,100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-12px) rotate(3deg); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-10px) rotate(-3deg); } } .tiger-win-character { animation: tigerWinDance 1.15s ease-in-out infinite; transform-origin:center bottom; } @media(prefers-reduced-motion:reduce){.tiger-win-character{animation:none;}}`}</style>
@@ -183,7 +201,7 @@ export function WinCelebration({
               } as CSSProperties
             }
           >
-            <img src={tier === 'super' ? '/assets/icons/super-mega-win-assets/gold-coin.svg' : '/assets/icons/mega%20win/gold-coin.png.svg'} alt="" className="h-full w-full object-contain" />
+            <img src={'/assets/icons/super-mega-win-assets/gold-coin.svg'} alt="" className="h-full w-full object-contain" />
           </div>
         ))}
       </div>
@@ -217,7 +235,7 @@ export function WinCelebration({
       {/* Animated winning amount aligned precisely to original artwork slot (top: 729px) */}
       <div
         className="tiger-prize-amount font-cabinet-serif pointer-events-none absolute left-0 w-full text-center text-[56px] font-black leading-none tracking-tight"
-        style={tier === 'big' ? {top: 680, fontSize: 100, fontStyle:'italic', color:'#ffe17a', WebkitTextStroke:'3px #9c2309', textShadow:'0 6px 0 #9c2309'} : {top:820,color:'#8b2607',textShadow:'0 2px 0 #fff4b0'}}
+        style={tier === 'big' ? {top: 680, fontSize: 100, fontStyle:'italic', color:'#ffe17a', WebkitTextStroke:'3px #9c2309', textShadow:'0 6px 0 #9c2309'} : {top:790,fontSize:100,fontStyle:'italic',color:'#ffe177',WebkitTextStroke:'3px #a3220c',textShadow:'0 7px 0 #a3220c'}}
       >
         {formatINR(displayAmount)}
       </div>
