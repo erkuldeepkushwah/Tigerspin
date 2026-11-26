@@ -57,3 +57,21 @@
 @media (prefers-reduced-motion: reduce) {
   .tiger-reference-crush, .tiger-reference-sparkles { animation: none !important; }
 }
+
+/* Uniform symbol art sizing across stationary and falling tiles. */
+.tiger-reel-icon { width: 136px; height: 136px; max-width: 76%; max-height: 78%; object-fit: contain; display: block; flex-shrink: 0; }
+.tiger-reference-crush { animation-duration: var(--crush-duration, 240ms); }
+.tiger-reference-sparkles { animation-duration: var(--crush-duration, 240ms); }
+@keyframes tiger-reference-cascade-drop {
+  0% { transform: translate3d(0,-400px,0) scale(.98,1.03); opacity: 0; }
+  20% { opacity: 1; }
+  76% { transform: translate3d(0,8px,0) scale(1.035,.96); }
+  90% { transform: translate3d(0,-4px,0) scale(.99,1.01); }
+  100% { transform: translate3d(0,0,0) scale(1); opacity: 1; }
+}
+@keyframes tiger-reference-crush {
+  0% { transform: scale(1); opacity: 1; }
+  35% { transform: scale(1.08,.94); opacity: 1; }
+  100% { transform: scale(.35); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .tiger-reference-crush, .tiger-reference-sparkles { animation: none !important; } }

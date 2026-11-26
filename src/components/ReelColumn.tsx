@@ -72,9 +72,9 @@ export function ReelColumn({
     const cascade = (n: number) => {
       const last = n === DROP_COUNT;
       const quick = speedRef.current || fastRef.current;
-      const crushTime = quick ? 110 : 240;
-      const emptyTime = quick ? 55 : 140;
-      const fallTime = quick ? 280 : 540;
+      const crushTime = quick ? 120 : 240;
+      const emptyTime = quick ? 55 : 100;
+      const fallTime = quick ? 300 : 540;
       const newTop: [number, number] = last
         ? [finalGrid[0], finalGrid[1]]
         : [drawSymbolIndex(), drawSymbolIndex()];
@@ -119,13 +119,13 @@ export function ReelColumn({
           const invisible = row < 2 && hideTop;
           const crushing = row < 2 && phase === 'crush';
           return (
-            <div key={row} className="relative flex items-center justify-center overflow-hidden" style={{ height: TILE_HEIGHT }}>
+            <div key={row} className="relative flex items-center justify-center overflow-hidden" style={{ height: TILE_HEIGHT, '--crush-duration': quick ? '120ms' : '240ms' } as React.CSSProperties}>
               {won && <div className="pointer-events-none absolute inset-2 rounded-xl border-2 border-[#ffe27a] bg-amber-300/15 shadow-[0_0_25px_#ffd65c]" />}
               {!invisible && (
                 <img
-                  key={`${spinId}-${wave}-${phase}-${row}`}
+                  key={`${row}-${id}`}
                   src={symbol.image} alt={symbol.label} draggable={false}
-                  className={`relative h-[160px] w-[160px] object-contain ${crushing ? 'tiger-reference-crush' : ''} ${won ? 'animate-win-tile' : ''} ${!busy && showWin && !won ? 'opacity-50' : ''}`}
+                  className={`relative tiger-reel-icon object-contain ${crushing ? 'tiger-reference-crush' : ''} ${won ? 'animate-win-tile' : ''} ${!busy && showWin && !won ? 'opacity-50' : ''}`}
                 />
               )}
               {crushing && <div className="tiger-reference-sparkles pointer-events-none absolute inset-0" />}
@@ -140,10 +140,10 @@ export function ReelColumn({
           style={{
             top: row * TILE_HEIGHT,
             height: TILE_HEIGHT,
-            animation: `tiger-reference-cascade-drop ${quick ? 255 : 510}ms cubic-bezier(.28,.62,.3,1) ${row === 0 ? 0 : quick ? 18 : 30}ms both`,
+            animation: `tiger-reference-cascade-drop ${quick ? 280 : 510}ms cubic-bezier(.25,.55,.35,1) ${row === 0 ? 0 : quick ? 18 : 30}ms both`,
           }}
         >
-          <img src={(SYMBOLS[id] || SYMBOLS[0]).image} alt="" draggable={false} className="h-[160px] w-[160px] object-contain" />
+          <img src={(SYMBOLS[id] || SYMBOLS[0]).image} alt="" draggable={false} className="tiger-reel-icon object-contain" />
         </div>
       ))}
     </div>

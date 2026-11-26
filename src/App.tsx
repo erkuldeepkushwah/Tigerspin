@@ -680,7 +680,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.pause}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/exit.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />
+          <img src="/assets/icons/Tiger%20Spin%20Icons/exit.png" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
         </button>
 
         {/* Settings Button */}
@@ -700,7 +700,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.settings}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/settings.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />
+          <img src="/assets/icons/Tiger%20Spin%20Icons/settings.png" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
         </button>
 
         {/* Turbo Toggle Button */}
@@ -715,7 +715,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.turbo}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/turbo.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />
+          <img src="/assets/icons/Tiger%20Spin%20Icons/turbo.png" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
           {turbo && (
             <>
               <span
@@ -752,7 +752,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.minus}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/minus.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />
+          <img src="/assets/icons/Tiger%20Spin%20Icons/minus.png" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
         </button>
 
         {/* Main Spin Button */}
@@ -766,19 +766,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.spin}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/spin.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />
-          {spinning && (
-            <span
-              aria-hidden="true"
-              className={`pointer-events-none absolute inset-0 rounded-full ${turbo ? 'animate-spin-orbit-fast' : 'animate-spin-orbit'}`}
-              style={{
-                backgroundImage: 'url(/assets/icons/Tiger%20Spin%20Icons/spin.png)',
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-              }}
-            />
-          )}
+          <img src="/assets/icons/Tiger%20Spin%20Icons/spin.png" alt="" draggable={false} className="pointer-events-none absolute inset-[6%] h-[88%] w-[88%] object-contain" />
           {spinning && (
             <span
               aria-hidden="true"
@@ -809,7 +797,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.plus}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/plus.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />
+          <img src="/assets/icons/Tiger%20Spin%20Icons/plus.png" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
         </button>
 
         {/* Auto-Spin Toggle Button */}
@@ -824,7 +812,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.auto}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/auto.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />
+          <img src="/assets/icons/Tiger%20Spin%20Icons/auto.png" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
           {autoSpin && (
             <>
               <span
