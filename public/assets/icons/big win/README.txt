@@ -1,0 +1,1 @@
+20 PNG crops extracted from the supplied screenshot. Four round controls have an elliptical alpha mask. Other assets retain screenshot background and overlapping content. Original separate layers, unobscured spin button and clean transparent character cannot be recovered from this flattened screenshot.
