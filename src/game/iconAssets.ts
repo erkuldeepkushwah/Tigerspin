@@ -1,278 +1,278 @@
 export const ICON_ASSETS = [
   {
     "group": "Tiger Spin Icons",
-    "name": "auto.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/auto.png"
+    "name": "auto.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/auto.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "exit.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/exit.png"
+    "name": "exit.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/exit.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "firecrackers.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/firecrackers.png"
+    "name": "firecrackers.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/firecrackers.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "fortune_bag.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/fortune_bag.png"
+    "name": "fortune_bag.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/fortune_bag.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "gold_ingot.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/gold_ingot.png"
+    "name": "gold_ingot.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/gold_ingot.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "jade_scepter.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/jade_scepter.png"
+    "name": "jade_scepter.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/jade_scepter.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "minus.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/minus.png"
+    "name": "minus.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/minus.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "orange.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/orange.png"
+    "name": "orange.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/orange.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "plus.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/plus.png"
+    "name": "plus.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/plus.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "red_envelopes.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/red_envelopes.png"
+    "name": "red_envelopes.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/red_envelopes.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "settings.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/settings.png"
+    "name": "settings.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/settings.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "spin.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/spin.png"
+    "name": "spin.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/spin.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "turbo.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/turbo.png"
+    "name": "turbo.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/turbo.png.svg"
   },
   {
     "group": "Tiger Spin Icons",
-    "name": "wild_tiger.png",
-    "url": "/assets/icons/Tiger%20Spin%20Icons/wild_tiger.png"
+    "name": "wild_tiger.png.svg",
+    "url": "/assets/icons/Tiger%20Spin%20Icons/wild_tiger.png.svg"
   },
   {
     "group": "big win",
-    "name": "auto-spin.png",
-    "url": "/assets/icons/big%20win/auto-spin.png"
+    "name": "auto-spin.png.svg",
+    "url": "/assets/icons/big%20win/auto-spin.png.svg"
   },
   {
     "group": "big win",
-    "name": "big-win-text.png",
-    "url": "/assets/icons/big%20win/big-win-text.png"
+    "name": "big-win-text.png.svg",
+    "url": "/assets/icons/big%20win/big-win-text.png.svg"
   },
   {
     "group": "big win",
-    "name": "blue-cloud-left.png",
-    "url": "/assets/icons/big%20win/blue-cloud-left.png"
+    "name": "blue-cloud-left.png.svg",
+    "url": "/assets/icons/big%20win/blue-cloud-left.png.svg"
   },
   {
     "group": "big win",
-    "name": "blue-cloud-right.png",
-    "url": "/assets/icons/big%20win/blue-cloud-right.png"
+    "name": "blue-cloud-right.png.svg",
+    "url": "/assets/icons/big%20win/blue-cloud-right.png.svg"
   },
   {
     "group": "big win",
-    "name": "coin-stack.png",
-    "url": "/assets/icons/big%20win/coin-stack.png"
+    "name": "coin-stack.png.svg",
+    "url": "/assets/icons/big%20win/coin-stack.png.svg"
   },
   {
     "group": "big win",
-    "name": "exit.png",
-    "url": "/assets/icons/big%20win/exit.png"
+    "name": "exit.png.svg",
+    "url": "/assets/icons/big%20win/exit.png.svg"
   },
   {
     "group": "big win",
-    "name": "fu-badge.png",
-    "url": "/assets/icons/big%20win/fu-badge.png"
+    "name": "fu-badge.png.svg",
+    "url": "/assets/icons/big%20win/fu-badge.png.svg"
   },
   {
     "group": "big win",
-    "name": "full-win-overlay.png",
-    "url": "/assets/icons/big%20win/full-win-overlay.png"
+    "name": "full-win-overlay.png.svg",
+    "url": "/assets/icons/big%20win/full-win-overlay.png.svg"
   },
   {
     "group": "big win",
-    "name": "golden-bull.png",
-    "url": "/assets/icons/big%20win/golden-bull.png"
+    "name": "golden-bull.png.svg",
+    "url": "/assets/icons/big%20win/golden-bull.png.svg"
   },
   {
     "group": "big win",
-    "name": "golden-win-frame.png",
-    "url": "/assets/icons/big%20win/golden-win-frame.png"
+    "name": "golden-win-frame.png.svg",
+    "url": "/assets/icons/big%20win/golden-win-frame.png.svg"
   },
   {
     "group": "big win",
-    "name": "left-tassel.png",
-    "url": "/assets/icons/big%20win/left-tassel.png"
+    "name": "left-tassel.png.svg",
+    "url": "/assets/icons/big%20win/left-tassel.png.svg"
   },
   {
     "group": "big win",
-    "name": "niu-badge.png",
-    "url": "/assets/icons/big%20win/niu-badge.png"
+    "name": "niu-badge.png.svg",
+    "url": "/assets/icons/big%20win/niu-badge.png.svg"
   },
   {
     "group": "big win",
-    "name": "niu-header.png",
-    "url": "/assets/icons/big%20win/niu-header.png"
+    "name": "niu-header.png.svg",
+    "url": "/assets/icons/big%20win/niu-header.png.svg"
   },
   {
     "group": "big win",
-    "name": "right-tassel.png",
-    "url": "/assets/icons/big%20win/right-tassel.png"
+    "name": "right-tassel.png.svg",
+    "url": "/assets/icons/big%20win/right-tassel.png.svg"
   },
   {
     "group": "big win",
-    "name": "settings.png",
-    "url": "/assets/icons/big%20win/settings.png"
+    "name": "settings.png.svg",
+    "url": "/assets/icons/big%20win/settings.png.svg"
   },
   {
     "group": "big win",
-    "name": "turbo-off.png",
-    "url": "/assets/icons/big%20win/turbo-off.png"
+    "name": "turbo-off.png.svg",
+    "url": "/assets/icons/big%20win/turbo-off.png.svg"
   },
   {
     "group": "big win",
-    "name": "wallet.png",
-    "url": "/assets/icons/big%20win/wallet.png"
+    "name": "wallet.png.svg",
+    "url": "/assets/icons/big%20win/wallet.png.svg"
   },
   {
     "group": "big win",
-    "name": "win-amount.png",
-    "url": "/assets/icons/big%20win/win-amount.png"
+    "name": "win-amount.png.svg",
+    "url": "/assets/icons/big%20win/win-amount.png.svg"
   },
   {
     "group": "big win",
-    "name": "win-indicator.png",
-    "url": "/assets/icons/big%20win/win-indicator.png"
+    "name": "win-indicator.png.svg",
+    "url": "/assets/icons/big%20win/win-indicator.png.svg"
   },
   {
     "group": "big win",
-    "name": "x10-multiplier.png",
-    "url": "/assets/icons/big%20win/x10-multiplier.png"
+    "name": "x10-multiplier.png.svg",
+    "url": "/assets/icons/big%20win/x10-multiplier.png.svg"
   },
   {
     "group": "mega win",
-    "name": "auto-spin.png",
-    "url": "/assets/icons/mega%20win/auto-spin.png"
+    "name": "auto-spin.png.svg",
+    "url": "/assets/icons/mega%20win/auto-spin.png.svg"
   },
   {
     "group": "mega win",
-    "name": "coin-stack.png",
-    "url": "/assets/icons/mega%20win/coin-stack.png"
+    "name": "coin-stack.png.svg",
+    "url": "/assets/icons/mega%20win/coin-stack.png.svg"
   },
   {
     "group": "mega win",
-    "name": "exit.png",
-    "url": "/assets/icons/mega%20win/exit.png"
+    "name": "exit.png.svg",
+    "url": "/assets/icons/mega%20win/exit.png.svg"
   },
   {
     "group": "mega win",
-    "name": "full-mega-win-overlay.png",
-    "url": "/assets/icons/mega%20win/full-mega-win-overlay.png"
+    "name": "full-mega-win-overlay.png.svg",
+    "url": "/assets/icons/mega%20win/full-mega-win-overlay.png.svg"
   },
   {
     "group": "mega win",
-    "name": "gold-coin.png",
-    "url": "/assets/icons/mega%20win/gold-coin.png"
+    "name": "gold-coin.png.svg",
+    "url": "/assets/icons/mega%20win/gold-coin.png.svg"
   },
   {
     "group": "mega win",
-    "name": "lower-green-frame.png",
-    "url": "/assets/icons/mega%20win/lower-green-frame.png"
+    "name": "lower-green-frame.png.svg",
+    "url": "/assets/icons/mega%20win/lower-green-frame.png.svg"
   },
   {
     "group": "mega win",
-    "name": "mega-win-text.png",
-    "url": "/assets/icons/mega%20win/mega-win-text.png"
+    "name": "mega-win-text.png.svg",
+    "url": "/assets/icons/mega%20win/mega-win-text.png.svg"
   },
   {
     "group": "mega win",
-    "name": "minus.png",
-    "url": "/assets/icons/mega%20win/minus.png"
+    "name": "minus.png.svg",
+    "url": "/assets/icons/mega%20win/minus.png.svg"
   },
   {
     "group": "mega win",
-    "name": "pink-petal.png",
-    "url": "/assets/icons/mega%20win/pink-petal.png"
+    "name": "pink-petal.png.svg",
+    "url": "/assets/icons/mega%20win/pink-petal.png.svg"
   },
   {
     "group": "mega win",
-    "name": "plus.png",
-    "url": "/assets/icons/mega%20win/plus.png"
+    "name": "plus.png.svg",
+    "url": "/assets/icons/mega%20win/plus.png.svg"
   },
   {
     "group": "mega win",
-    "name": "red-envelope.png",
-    "url": "/assets/icons/mega%20win/red-envelope.png"
+    "name": "red-envelope.png.svg",
+    "url": "/assets/icons/mega%20win/red-envelope.png.svg"
   },
   {
     "group": "mega win",
-    "name": "settings.png",
-    "url": "/assets/icons/mega%20win/settings.png"
+    "name": "settings.png.svg",
+    "url": "/assets/icons/mega%20win/settings.png.svg"
   },
   {
     "group": "mega win",
-    "name": "spin.png",
-    "url": "/assets/icons/mega%20win/spin.png"
+    "name": "spin.png.svg",
+    "url": "/assets/icons/mega%20win/spin.png.svg"
   },
   {
     "group": "mega win",
-    "name": "tiger-character.png",
-    "url": "/assets/icons/mega%20win/tiger-character.png"
+    "name": "tiger-character.png.svg",
+    "url": "/assets/icons/mega%20win/tiger-character.png.svg"
   },
   {
     "group": "mega win",
-    "name": "turbo-off.png",
-    "url": "/assets/icons/mega%20win/turbo-off.png"
+    "name": "turbo-off.png.svg",
+    "url": "/assets/icons/mega%20win/turbo-off.png.svg"
   },
   {
     "group": "mega win",
-    "name": "upper-left-frame.png",
-    "url": "/assets/icons/mega%20win/upper-left-frame.png"
+    "name": "upper-left-frame.png.svg",
+    "url": "/assets/icons/mega%20win/upper-left-frame.png.svg"
   },
   {
     "group": "mega win",
-    "name": "upper-right-frame.png",
-    "url": "/assets/icons/mega%20win/upper-right-frame.png"
+    "name": "upper-right-frame.png.svg",
+    "url": "/assets/icons/mega%20win/upper-right-frame.png.svg"
   },
   {
     "group": "mega win",
-    "name": "wallet.png",
-    "url": "/assets/icons/mega%20win/wallet.png"
+    "name": "wallet.png.svg",
+    "url": "/assets/icons/mega%20win/wallet.png.svg"
   },
   {
     "group": "mega win",
-    "name": "win-amount.png",
-    "url": "/assets/icons/mega%20win/win-amount.png"
+    "name": "win-amount.png.svg",
+    "url": "/assets/icons/mega%20win/win-amount.png.svg"
   },
   {
     "group": "mega win",
-    "name": "win-indicator.png",
-    "url": "/assets/icons/mega%20win/win-indicator.png"
+    "name": "win-indicator.png.svg",
+    "url": "/assets/icons/mega%20win/win-indicator.png.svg"
   },
   {
     "group": "super-mega-win-assets",
-    "name": "auto-spin.png",
-    "url": "/assets/icons/super-mega-win-assets/auto-spin.png"
+    "name": "auto-spin.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/auto-spin.png.svg"
   },
   {
     "group": "super-mega-win-assets",
@@ -281,8 +281,8 @@ export const ICON_ASSETS = [
   },
   {
     "group": "super-mega-win-assets",
-    "name": "decorative-frame.png",
-    "url": "/assets/icons/super-mega-win-assets/decorative-frame.png"
+    "name": "decorative-frame.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/decorative-frame.png.svg"
   },
   {
     "group": "super-mega-win-assets",
@@ -291,8 +291,8 @@ export const ICON_ASSETS = [
   },
   {
     "group": "super-mega-win-assets",
-    "name": "gold-coin.png",
-    "url": "/assets/icons/super-mega-win-assets/gold-coin.png"
+    "name": "gold-coin.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/gold-coin.png.svg"
   },
   {
     "group": "super-mega-win-assets",
@@ -301,8 +301,8 @@ export const ICON_ASSETS = [
   },
   {
     "group": "super-mega-win-assets",
-    "name": "minus.png",
-    "url": "/assets/icons/super-mega-win-assets/minus.png"
+    "name": "minus.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/minus.png.svg"
   },
   {
     "group": "super-mega-win-assets",
@@ -311,8 +311,8 @@ export const ICON_ASSETS = [
   },
   {
     "group": "super-mega-win-assets",
-    "name": "plus.png",
-    "url": "/assets/icons/super-mega-win-assets/plus.png"
+    "name": "plus.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/plus.png.svg"
   },
   {
     "group": "super-mega-win-assets",
@@ -321,8 +321,8 @@ export const ICON_ASSETS = [
   },
   {
     "group": "super-mega-win-assets",
-    "name": "red-envelope.png",
-    "url": "/assets/icons/super-mega-win-assets/red-envelope.png"
+    "name": "red-envelope.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/red-envelope.png.svg"
   },
   {
     "group": "super-mega-win-assets",
@@ -331,8 +331,8 @@ export const ICON_ASSETS = [
   },
   {
     "group": "super-mega-win-assets",
-    "name": "settings.png",
-    "url": "/assets/icons/super-mega-win-assets/settings.png"
+    "name": "settings.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/settings.png.svg"
   },
   {
     "group": "super-mega-win-assets",
@@ -341,8 +341,8 @@ export const ICON_ASSETS = [
   },
   {
     "group": "super-mega-win-assets",
-    "name": "spin.png",
-    "url": "/assets/icons/super-mega-win-assets/spin.png"
+    "name": "spin.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/spin.png.svg"
   },
   {
     "group": "super-mega-win-assets",
@@ -351,8 +351,8 @@ export const ICON_ASSETS = [
   },
   {
     "group": "super-mega-win-assets",
-    "name": "super-mega-win.png",
-    "url": "/assets/icons/super-mega-win-assets/super-mega-win.png"
+    "name": "super-mega-win.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/super-mega-win.png.svg"
   },
   {
     "group": "super-mega-win-assets",
@@ -361,8 +361,8 @@ export const ICON_ASSETS = [
   },
   {
     "group": "super-mega-win-assets",
-    "name": "tiger-character.png",
-    "url": "/assets/icons/super-mega-win-assets/tiger-character.png"
+    "name": "tiger-character.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/tiger-character.png.svg"
   },
   {
     "group": "super-mega-win-assets",
@@ -371,8 +371,8 @@ export const ICON_ASSETS = [
   },
   {
     "group": "super-mega-win-assets",
-    "name": "wallet.png",
-    "url": "/assets/icons/super-mega-win-assets/wallet.png"
+    "name": "wallet.png.svg",
+    "url": "/assets/icons/super-mega-win-assets/wallet.png.svg"
   },
   {
     "group": "super-mega-win-assets",

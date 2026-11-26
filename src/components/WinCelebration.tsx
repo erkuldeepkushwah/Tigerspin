@@ -139,23 +139,23 @@ export function WinCelebration({
         className="pointer-events-none absolute inset-0 h-full w-full object-contain"
       />
 
-      {tier === 'super' && <img src="/assets/icons/super-mega-win-assets/super-mega-win.png" alt="" className="pointer-events-none absolute left-[12%] top-[24%] w-[76%] object-contain" />}
+      {tier === 'super' && <img src="/assets/icons/super-mega-win-assets/super-mega-win.png.svg" alt="" className="pointer-events-none absolute left-[12%] top-[24%] w-[76%] object-contain" />}
       {/* Individual uploaded artwork accents, separate from the full cabinet overlay. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {tier === 'big' ? <>
-          <img src="/assets/icons/big%20win/golden-bull.png" alt="" className="tiger-win-character absolute left-[5%] top-[11%] h-[13%] w-[24%] object-contain" />
-          <img src="/assets/icons/big%20win/coin-stack.png" alt="" className="absolute bottom-[20%] right-[5%] h-[8%] w-[18%] object-contain" />
+          <img src="/assets/icons/big%20win/golden-bull.png.svg" alt="" className="tiger-win-character absolute left-[5%] top-[11%] h-[13%] w-[24%] object-contain" />
+          <img src="/assets/icons/big%20win/coin-stack.png.svg" alt="" className="absolute bottom-[20%] right-[5%] h-[8%] w-[18%] object-contain" />
         </> : tier === 'mega' ? <>
-          <img src="/assets/icons/mega%20win/pink-petal.png" alt="" className="absolute left-[5%] top-[17%] h-[6%] w-[12%] object-contain" />
-          <img src="/assets/icons/mega%20win/red-envelope.png" alt="" className="absolute right-[5%] top-[17%] h-[7%] w-[14%] object-contain" />
-          <img src="/assets/icons/mega%20win/coin-stack.png" alt="" className="absolute bottom-[20%] right-[5%] h-[8%] w-[18%] object-contain" />
+          <img src="/assets/icons/mega%20win/pink-petal.png.svg" alt="" className="absolute left-[5%] top-[17%] h-[6%] w-[12%] object-contain" />
+          <img src="/assets/icons/mega%20win/red-envelope.png.svg" alt="" className="absolute right-[5%] top-[17%] h-[7%] w-[14%] object-contain" />
+          <img src="/assets/icons/mega%20win/coin-stack.png.svg" alt="" className="absolute bottom-[20%] right-[5%] h-[8%] w-[18%] object-contain" />
         </> : <>
           <img src="/assets/icons/super-mega-win-assets/decorative-frame.svg" alt="" className="absolute inset-0 h-full w-full object-contain" />
           <img src="/assets/icons/super-mega-win-assets/red-envelope.svg" alt="" className="absolute right-[5%] top-[17%] h-[7%] w-[14%] object-contain" />
         </>}
       </div>
       {/* Animated character artwork on win */}
-      {tier !== 'big' && <img src={tier === 'super' ? '/assets/icons/super-mega-win-assets/tiger-character.png' : '/assets/icons/mega%20win/tiger-character.png'} alt="" draggable={false} className="tiger-win-character pointer-events-none absolute left-[30%] top-[6%] h-[20%] w-[40%] object-contain" />}
+      {tier !== 'big' && <img src={tier === 'super' ? '/assets/icons/super-mega-win-assets/tiger-character.png.svg' : '/assets/icons/mega%20win/tiger-character.png.svg'} alt="" draggable={false} className="tiger-win-character pointer-events-none absolute left-[30%] top-[6%] h-[20%] w-[40%] object-contain" />}
       <style>{`@keyframes tigerWinDance { 0%,100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-16px) rotate(3deg) scale(1.04); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-12px) rotate(-3deg) scale(1.03); } } .tiger-win-character { animation: tigerWinDance 1.15s ease-in-out infinite; transform-origin: center bottom; } @media (prefers-reduced-motion: reduce) { .tiger-win-character { animation: none; } }`}</style>
       {/* Falling gold coin shower */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -175,7 +175,7 @@ export function WinCelebration({
               } as CSSProperties
             }
           >
-            <img src={tier === 'super' ? '/assets/icons/super-mega-win-assets/gold-coin.svg' : '/assets/icons/mega%20win/gold-coin.png'} alt="" className="h-full w-full object-contain" />
+            <img src={tier === 'super' ? '/assets/icons/super-mega-win-assets/gold-coin.svg' : '/assets/icons/mega%20win/gold-coin.png.svg'} alt="" className="h-full w-full object-contain" />
           </div>
         ))}
       </div>

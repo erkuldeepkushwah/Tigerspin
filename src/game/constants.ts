@@ -26,10 +26,10 @@ export const REEL_HEIGHT = TILE_HEIGHT * 3; // 546
 export const REELS_TOTAL_WIDTH = REEL_WIDTH * 3 + REEL_GAP * 2; // 591
 
 export const ASSETS = {
-  board: '/assets/tiger/board.webp',
-  big: '/assets/icons/big%20win/full-win-overlay.png',
-  mega: '/assets/icons/mega%20win/full-mega-win-overlay.png',
-  super: '/assets/tiger/super.webp',
+  board: '/assets/tiger/board.webp.svg',
+  big: '/assets/icons/big%20win/full-win-overlay.png.svg',
+  mega: '/assets/icons/mega%20win/full-mega-win-overlay.png.svg',
+  super: '/assets/tiger/super.webp.svg',
 } as const;
 
 export const SYMBOLS: readonly SymbolDef[] = [
@@ -39,7 +39,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Mandarin',
     weight: 7,
     rate: 2,
-    image: '/assets/icons/Tiger%20Spin%20Icons/orange.png',
+    image: '/assets/icons/Tiger%20Spin%20Icons/orange.png.svg',
   },
   {
     id: 1,
@@ -47,7 +47,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Jade Charm',
     weight: 4,
     rate: 8,
-    image: '/assets/icons/Tiger%20Spin%20Icons/jade_scepter.png',
+    image: '/assets/icons/Tiger%20Spin%20Icons/jade_scepter.png.svg',
   },
   {
     id: 2,
@@ -55,7 +55,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Red Packet',
     weight: 5,
     rate: 4,
-    image: '/assets/icons/Tiger%20Spin%20Icons/red_envelopes.png',
+    image: '/assets/icons/Tiger%20Spin%20Icons/red_envelopes.png.svg',
   },
   {
     id: 3,
@@ -63,7 +63,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Firecracker',
     weight: 5,
     rate: 3,
-    image: '/assets/icons/Tiger%20Spin%20Icons/firecrackers.png',
+    image: '/assets/icons/Tiger%20Spin%20Icons/firecrackers.png.svg',
   },
   {
     id: 4,
@@ -71,7 +71,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Gold Pouch',
     weight: 4,
     rate: 5,
-    image: '/assets/icons/Tiger%20Spin%20Icons/fortune_bag.png',
+    image: '/assets/icons/Tiger%20Spin%20Icons/fortune_bag.png.svg',
   },
   {
     id: 5,
@@ -79,7 +79,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Tiger Wild',
     weight: 1,
     rate: 50,
-    image: '/assets/icons/Tiger%20Spin%20Icons/wild_tiger.png',
+    image: '/assets/icons/Tiger%20Spin%20Icons/wild_tiger.png.svg',
     isWild: true,
   },
 ] as const;

@@ -3,8 +3,10 @@ import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
 import {defineConfig} from 'vite';
+import { generateSvgAssets } from './scripts/generate-svg-assets.mjs';
 
 export default defineConfig(() => {
+  generateSvgAssets();
   return {
     plugins: [
       react(),
