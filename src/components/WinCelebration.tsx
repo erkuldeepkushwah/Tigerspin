@@ -111,7 +111,7 @@ export function WinCelebration({
     <div
       role="button"
       tabIndex={0}
-      aria-label={`${tier === 'super' ? 'Super Win' : 'Mega Win'} ${formatINR(amount)}. Tap to continue.`}
+      aria-label={`${tier === 'super' ? 'Super Mega Win' : 'Mega Win'} ${formatINR(amount)}. Tap to continue.`}
       onClick={onDismiss}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
@@ -131,20 +131,21 @@ export function WinCelebration({
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(255,200,55,0.34)_0%,rgba(120,30,8,0.12)_48%,transparent_72%)]"
       />
 
-      {/* Exact Mega/Super Win artwork overlay */}
+      {/* Exact Mega/Super Mega Win artwork overlay */}
       <img
         src={tier === 'super' ? ASSETS.super : ASSETS.mega}
-        alt={tier === 'super' ? 'Super Win' : 'Mega Win'}
+        alt={tier === 'super' ? 'Super Mega Win' : 'Mega Win'}
         draggable={false}
         className="pointer-events-none absolute inset-0 h-full w-full object-contain"
       />
 
+      {tier === 'super' && <img src="/assets/icons/super-mega-win-assets/super-mega-win.png" alt="" className="pointer-events-none absolute left-[12%] top-[24%] w-[76%] object-contain" />}
       {/* Falling gold coin shower */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         {coins.map((c) => (
           <div
             key={c.id}
-            className="animate-coin-fall absolute top-0 rounded-full border-[3px] border-[#fff3a8] bg-[radial-gradient(circle_at_32%_30%,#fff9d0_0%,#ffd046_42%,#c97a08_100%)] shadow-[0_4px_12px_rgba(0,0,0,0.45)]"
+            className="animate-coin-fall absolute top-0"
             style={
               {
                 left: c.left,
@@ -157,7 +158,7 @@ export function WinCelebration({
               } as CSSProperties
             }
           >
-            <div className="mx-auto mt-[22%] h-[56%] w-[56%] rounded-full border border-[#a55c00]/65" />
+            <img src={tier === 'super' ? '/assets/icons/super-mega-win-assets/gold-coin.svg' : '/assets/icons/mega%20win/gold-coin.png'} alt="" className="h-full w-full object-contain" />
           </div>
         ))}
       </div>
