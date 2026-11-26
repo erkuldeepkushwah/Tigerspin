@@ -27,7 +27,7 @@ export const REELS_TOTAL_WIDTH = REEL_WIDTH * 3 + REEL_GAP * 2; // 591
 
 export const ASSETS = {
   board: '/assets/tiger/board.webp',
-  mega: '/assets/tiger/mega.webp',
+  mega: '/assets/icons/mega%20win/full-mega-win-overlay.png',
   super: '/assets/tiger/super.webp',
 } as const;
 
@@ -38,7 +38,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Mandarin',
     weight: 7,
     rate: 2,
-    image: '/assets/tiger/orange.webp',
+    image: '/assets/icons/Tiger%20Spin%20Icons/orange.png',
   },
   {
     id: 1,
@@ -46,7 +46,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Jade Charm',
     weight: 4,
     rate: 8,
-    image: '/assets/tiger/jade.webp',
+    image: '/assets/icons/Tiger%20Spin%20Icons/jade_scepter.png',
   },
   {
     id: 2,
@@ -54,7 +54,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Red Packet',
     weight: 5,
     rate: 4,
-    image: '/assets/tiger/packet.webp',
+    image: '/assets/icons/Tiger%20Spin%20Icons/red_envelopes.png',
   },
   {
     id: 3,
@@ -62,7 +62,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Firecracker',
     weight: 5,
     rate: 3,
-    image: '/assets/tiger/cracker.webp',
+    image: '/assets/icons/Tiger%20Spin%20Icons/firecrackers.png',
   },
   {
     id: 4,
@@ -70,7 +70,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Gold Pouch',
     weight: 4,
     rate: 5,
-    image: '/assets/tiger/bag.webp',
+    image: '/assets/icons/Tiger%20Spin%20Icons/fortune_bag.png',
   },
   {
     id: 5,
@@ -78,7 +78,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Tiger Wild',
     weight: 1,
     rate: 50,
-    image: '/assets/tiger/wild.webp',
+    image: '/assets/icons/Tiger%20Spin%20Icons/wild_tiger.png',
     isWild: true,
   },
 ] as const;
