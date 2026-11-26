@@ -37,12 +37,12 @@ export function WinCelebration({
 
   const coins = useMemo<CoinParticle[]>(
     () =>
-      Array.from({ length: 20 }, (_, i) => ({
+      Array.from({ length: 40 }, (_, i) => ({
         id: i,
         left: 26 + ((i * 33) % 622),
-        size: 28 + (i % 4) * 7,
-        duration: 1.7 + (i % 5) * 0.28,
-        delay: (i % 7) * 0.16,
+        size: 22 + (i % 7) * 12,
+        duration: 2.2 + (i % 5) * 0.35,
+        delay: -(i % 13) * 0.19,
         drift: ((i % 2 === 0 ? 1 : -1) * (20 + (i % 5) * 14)),
         rotation: (i % 2 === 0 ? 1 : -1) * (420 + (i % 4) * 140),
       })),
@@ -78,13 +78,14 @@ export function WinCelebration({
       return;
     }
 
-    const countDuration = tier === 'super' ? 1250 : 950;
+    setDisplayAmount(0);
+    const countDuration = tier === 'super' ? 3000 : tier === 'mega' ? 2600 : 1800;
     const start = performance.now();
     let rafId = 0;
 
     const step = (now: number) => {
       const p = Math.min(1, (now - start) / countDuration);
-      const eased = 1 - Math.pow(1 - p, 3);
+      const eased = p * (2 - p);
       setDisplayAmount(amount * eased);
       if (p < 1) {
         rafId = requestAnimationFrame(step);
@@ -100,7 +101,7 @@ export function WinCelebration({
   // Auto-dismiss cleanly
   useEffect(() => {
     if (!tier) return;
-    const timeoutMs = autoSpinActive ? 2200 : 3600;
+    const timeoutMs = tier === 'big' ? (autoSpinActive ? 2600 : 3800) : (autoSpinActive ? 4400 : 6000);
     const timer = window.setTimeout(onDismiss, timeoutMs);
     return () => window.clearTimeout(timer);
   }, [tier, autoSpinActive, onDismiss]);
@@ -131,6 +132,7 @@ export function WinCelebration({
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(255,200,55,0.34)_0%,rgba(120,30,8,0.12)_48%,transparent_72%)]"
       />
 
+      <div aria-hidden="true" className="tiger-celebration-glow pointer-events-none absolute inset-0" style={{background:'radial-gradient(ellipse at 50% 45%,rgba(255,215,65,.35),transparent 60%),radial-gradient(ellipse at 15% 82%,rgba(255,110,20,.5),transparent 30%),radial-gradient(ellipse at 85% 82%,rgba(255,110,20,.5),transparent 30%)'}} />
       {tier === 'big' ? (
         <div className="pointer-events-none absolute inset-0">
           <svg viewBox="0 0 674 1462" className="absolute inset-0 h-full w-full" aria-hidden="true">
@@ -186,6 +188,28 @@ export function WinCelebration({
         </>
       )}
       <style>{`@keyframes tigerWinDance { 0%,100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-12px) rotate(3deg); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-10px) rotate(-3deg); } } .tiger-win-character { animation: tigerWinDance 1.15s ease-in-out infinite; transform-origin:center bottom; } @keyframes tigerPoseOne{0%,49.99%{opacity:1}50%,100%{opacity:0}} @keyframes tigerPoseTwo{0%,49.99%{opacity:0}50%,100%{opacity:1}} .tiger-pose-one{animation:tigerPoseOne 4s step-end infinite} .tiger-pose-two{animation:tigerPoseTwo 4s step-end infinite} @media(prefers-reduced-motion:reduce){.tiger-win-character,.tiger-pose-one,.tiger-pose-two{animation:none;}.tiger-pose-two{opacity:0;}}`}</style>
+      {/* Decorative firework bursts and falling petals. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        {[{x:12,y:77,d:0},{x:86,y:80,d:.7},{x:88,y:18,d:1.3},{x:15,y:24,d:2}].map((burst,i)=>(
+          <div key={i} className="absolute" style={{left:burst.x+'%',top:burst.y+'%'}}>
+            {Array.from({length:18},(_,j)=>(
+              <span key={j} className="tiger-firework-ray absolute" style={{'--angle':(j*20)+'deg','--distance':(55+(j%4)*18)+'px',animationDelay:burst.d+'s'} as CSSProperties}/>
+            ))}
+          </div>
+        ))}
+        {Array.from({length:12},(_,i)=>(
+          <span key={i} className="tiger-win-petal absolute" style={{left:((i*67)%100)+'%',animationDelay:-(i%7)*.5+'s',animationDuration:(3+(i%4)*.45)+'s'}}/>
+        ))}
+      </div>
+      <style>{`
+        @keyframes tigerFireworkRay{0%,12%{opacity:0;transform:rotate(var(--angle)) translateX(0) scaleX(.1)}25%{opacity:1}65%{opacity:.8;transform:rotate(var(--angle)) translateX(var(--distance)) scaleX(.8)}100%{opacity:0;transform:rotate(var(--angle)) translateX(var(--distance)) scaleX(.05)}}
+        .tiger-firework-ray{width:26px;height:3px;border-radius:100%;background:linear-gradient(90deg,transparent,#ffbc39,#fffbd4);box-shadow:0 0 10px #ffb13c;transform-origin:left center;animation:tigerFireworkRay 2.8s ease-out infinite}
+        @keyframes tigerPetalFall{0%{transform:translate3d(0,-70px,0) rotate(0deg);opacity:0}12%{opacity:.9}90%{opacity:.8}100%{transform:translate3d(80px,1530px,0) rotate(490deg);opacity:0}}
+        .tiger-win-petal{top:0;width:24px;height:36px;border-radius:85% 10% 85% 15%;background:linear-gradient(140deg,#ffb4dd,#ff4b98);animation:tigerPetalFall linear infinite}
+        @keyframes tigerGlowPulse{0%,100%{opacity:.65}50%{opacity:1}}
+        .tiger-celebration-glow{animation:tigerGlowPulse 1.7s ease-in-out infinite}
+        @media(prefers-reduced-motion:reduce){.tiger-win-petal,.tiger-firework-ray{display:none}.tiger-celebration-glow{animation:none}}
+      `}</style>
       {/* Falling gold coin shower */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         {coins.map((c) => (
