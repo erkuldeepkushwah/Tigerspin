@@ -79,7 +79,7 @@ export function WinCelebration({
     }
 
     setDisplayAmount(0);
-    const countDuration = tier === 'super' ? 3000 : tier === 'mega' ? 2600 : 1800;
+    const countDuration = tier === 'super' ? 5000 : tier === 'mega' ? 4000 : 3000;
     const start = performance.now();
     let rafId = 0;
 
@@ -101,7 +101,8 @@ export function WinCelebration({
   // Auto-dismiss cleanly
   useEffect(() => {
     if (!tier) return;
-    const timeoutMs = tier === 'big' ? (autoSpinActive ? 2600 : 3800) : (autoSpinActive ? 4400 : 6000);
+    const countMs = tier === 'super' ? 5000 : tier === 'mega' ? 4000 : 3000;
+    const timeoutMs = countMs + (autoSpinActive ? 800 : 2000);
     const timer = window.setTimeout(onDismiss, timeoutMs);
     return () => window.clearTimeout(timer);
   }, [tier, autoSpinActive, onDismiss]);
@@ -113,11 +114,11 @@ export function WinCelebration({
       role="button"
       tabIndex={0}
       aria-label={`${tier === 'super' ? 'Super Mega Win' : tier === 'big' ? 'Big Win' : 'Mega Win'} ${formatINR(amount)}. Tap to continue.`}
-      onClick={onDismiss}
+      onClick={() => { if (displayAmount >= amount) onDismiss(); }}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
           e.preventDefault();
-          onDismiss();
+          if (displayAmount >= amount) onDismiss();
         }
       }}
       className="animate-overlay-in absolute inset-0 z-40 cursor-pointer overflow-hidden bg-black/55 backdrop-blur-[2px]"
