@@ -129,6 +129,7 @@ export function WinCelebration({
     >
       {/* Shared uploaded celebration background for all win tiers. */}
       <img src="/assets/tiger/golden-win-background.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-cover" />
+      <div aria-hidden="true" className="tiger-golden-burst pointer-events-none absolute inset-0" />
       {/* Golden radial spotlight */}
       <div
         aria-hidden="true"
@@ -173,6 +174,11 @@ export function WinCelebration({
         .tiger-firework-ray{width:26px;height:3px;border-radius:100%;background:linear-gradient(90deg,transparent,#ffbc39,#fffbd4);box-shadow:0 0 10px #ffb13c;transform-origin:left center;animation:tigerFireworkRay 2.8s ease-out infinite}
         @keyframes tigerPetalFall{0%{transform:translate3d(0,-70px,0) rotate(0deg);opacity:0}12%{opacity:.9}90%{opacity:.8}100%{transform:translate3d(80px,1530px,0) rotate(490deg);opacity:0}}
         .tiger-win-petal{top:0;width:24px;height:36px;border-radius:85% 10% 85% 15%;background:linear-gradient(140deg,#ffb4dd,#ff4b98);animation:tigerPetalFall linear infinite}
+        .tiger-golden-burst{background:radial-gradient(ellipse at 50% 48%,rgba(255,247,175,.65),rgba(255,184,35,.3) 35%,transparent 72%);animation:tigerGoldenBurst 1.5s ease-out both}
+        @keyframes tigerGoldenBurst{0%{opacity:.15;transform:scale(.7)}35%{opacity:1;transform:scale(1)}100%{opacity:.35;transform:scale(1.12)}}
+        .tiger-golden-amount{animation:tigerAmountGlow 2s ease-in-out infinite}
+        @keyframes tigerAmountGlow{0%,100%{filter:drop-shadow(0 0 5px #ffb52a)}50%{filter:drop-shadow(0 0 18px #ffe36b) brightness(1.12)}}
+        @media(prefers-reduced-motion:reduce){.tiger-golden-burst,.tiger-golden-amount{animation:none}}
         @keyframes tigerGlowPulse{0%,100%{opacity:.65}50%{opacity:1}}
         .tiger-celebration-glow{animation:tigerGlowPulse 1.7s ease-in-out infinite}
         @media(prefers-reduced-motion:reduce){.tiger-win-petal,.tiger-firework-ray{display:none}.tiger-celebration-glow{animation:none}}
@@ -228,7 +234,7 @@ export function WinCelebration({
 
       {/* Animated winning amount aligned precisely to original artwork slot (top: 729px) */}
       <div
-        className="tiger-prize-amount font-cabinet-serif pointer-events-none absolute left-0 w-full text-center text-[56px] font-black leading-none tracking-tight"
+        className="tiger-golden-amount tiger-prize-amount font-cabinet-serif pointer-events-none absolute left-0 w-full text-center text-[56px] font-black leading-none tracking-tight"
         style={tier === 'big' ? {top: 680, fontSize: 100, fontStyle:'italic', color:'#ffe17a', WebkitTextStroke:'3px #9c2309', textShadow:'0 6px 0 #9c2309'} : {top:790,fontSize:100,fontStyle:'italic',color:'#ffe177',WebkitTextStroke:'3px #a3220c',textShadow:'0 7px 0 #a3220c'}}
       >
         {formatINR(displayAmount)}
