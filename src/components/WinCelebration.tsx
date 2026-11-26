@@ -1,5 +1,5 @@
 import { type CSSProperties, useEffect, useMemo, useState } from 'react';
-import { ASSETS, BOARD_HEIGHT, BOARD_WIDTH, formatINR } from '../game/constants';
+import { BOARD_HEIGHT, BOARD_WIDTH, formatINR } from '../game/constants';
 
 interface WinCelebrationProps {
   tier: 'big' | 'mega' | 'super' | null;
@@ -131,25 +131,13 @@ export function WinCelebration({
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(255,200,55,0.34)_0%,rgba(120,30,8,0.12)_48%,transparent_72%)]"
       />
 
-      {/* Exact Mega/Super Mega Win artwork overlay */}
-      <img
-        src={tier === 'super' ? ASSETS.super : tier === 'big' ? ASSETS.big : ASSETS.mega}
-        alt={tier === 'super' ? 'Super Mega Win' : tier === 'big' ? 'Big Win' : 'Mega Win'}
-        draggable={false}
-        className="pointer-events-none absolute inset-0 h-full w-full object-contain"
-        style={tier === 'big' ? { clipPath: 'inset(0 0 28% 0)' } : { clipPath: 'inset(34% 0 0 0)' }}
-      />
-
-      {/* Individual uploaded artwork accents, separate from the full cabinet overlay. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        {tier === 'big' ? <>
-          <img src="/assets/icons/big%20win/golden-bull.png.svg" alt="" draggable={false} className="tiger-win-character absolute left-[15%] top-[66%] h-[24%] w-[70%] object-contain" />
-          <img src="/assets/icons/big%20win/coin-stack.png.svg" alt="" className="absolute bottom-[20%] right-[5%] h-[8%] w-[18%] object-contain" />
-        </> : null}
+      {/* Build a clean celebration from separate artwork, never a screenshot with a baked amount. */}
+      <div className="pointer-events-none absolute left-[5%] top-[23%] h-[49%] w-[90%] rounded-[64px] border-[10px] border-[#f8cd58] shadow-[0_0_55px_#ffbb37,inset_0_0_30px_#b76111]" style={{background:'radial-gradient(ellipse at 50% 42%,#fff5bd,#fbd35d 55%,#ac5014)'}} />
+      <img src={tier === 'big' ? '/assets/icons/big%20win/golden-bull.png.svg' : '/assets/icons/super-mega-win-assets/tiger-character.svg'} alt="" draggable={false} className="tiger-win-character pointer-events-none absolute left-[23%] top-[12%] h-[29%] w-[54%] object-contain" />
+      <div className="font-cabinet-display pointer-events-none absolute left-[8%] top-[43%] w-[84%] text-center text-[68px] font-black leading-tight" style={{color:'#fff6b2',textShadow:'0 5px 0 #914008, 0 0 18px #b34d09'}}>
+        {tier === 'super' ? 'SUPER MEGA WIN' : tier === 'big' ? 'BIG WIN' : 'MEGA WIN'}
       </div>
-      {/* Animate the original overlay's upper tiger region, rather than adding a second cropped character. */}
-      {tier !== 'big' && <img src={tier === 'super' ? ASSETS.super : ASSETS.mega} alt="" draggable={false} className="tiger-win-character pointer-events-none absolute inset-0 h-full w-full object-contain" style={{clipPath: 'inset(0 0 66% 0)', transformOrigin: '50% 34%'}} />}
-      <style>{`@keyframes tigerWinDance { 0%,100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-16px) rotate(3deg) scale(1.04); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-12px) rotate(-3deg) scale(1.03); } } .tiger-win-character { animation: tigerWinDance 1.15s ease-in-out infinite; transform-origin: center bottom; } @media (prefers-reduced-motion: reduce) { .tiger-win-character { animation: none; } }`}</style>
+      <style>{`@keyframes tigerWinDance { 0%,100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-12px) rotate(3deg); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-10px) rotate(-3deg); } } .tiger-win-character { animation: tigerWinDance 1.15s ease-in-out infinite; transform-origin:center bottom; } @media(prefers-reduced-motion:reduce){.tiger-win-character{animation:none;}}`}</style>
       {/* Falling gold coin shower */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         {coins.map((c) => (
@@ -202,7 +190,7 @@ export function WinCelebration({
       {/* Animated winning amount aligned precisely to original artwork slot (top: 729px) */}
       <div
         className="tiger-prize-amount font-cabinet-serif pointer-events-none absolute left-0 w-full text-center text-[56px] font-black leading-none tracking-tight"
-        style={{ top: tier === 'mega' ? 800 : 729, ...(tier === 'mega' ? { background: 'radial-gradient(ellipse,#fff0a0 0%,#ffd85d 65%,#efae29 100%)', color: '#9a310d', textShadow: '0 2px 0 #fff4b0', left: '15%', width: '70%', borderRadius: 18, padding: '12px 0' } : {}) }}
+        style={{ top: 820, color: '#8b2607', textShadow: '0 2px 0 #fff4b0' }}
       >
         {formatINR(displayAmount)}
       </div>
@@ -210,7 +198,7 @@ export function WinCelebration({
       {/* Subtle tap-to-continue cue */}
       <div
         className="pointer-events-none absolute left-0 w-full text-center"
-        style={{ top: tier === 'big' ? 1340 : 1090 }}
+        style={{ top: 1090 }}
       >
         <span className="inline-block rounded-full border border-[#ffe28c]/45 bg-[#2a0c06]/80 px-6 py-2 text-[20px] font-bold tracking-[0.16em] text-[#ffe9b4]/90 shadow-lg">
           TAP TO CONTINUE
