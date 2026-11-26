@@ -69,9 +69,9 @@ export function ReelColumn({
     const cascade = (n: number) => {
       const last = n === DROP_COUNT;
       const quick = speedRef.current || fastRef.current;
-      const crushTime = quick ? 120 : 240;
-      const emptyTime = quick ? 55 : 100;
-      const fallTime = quick ? 330 : 580;
+      const crushTime = quick ? 65 : 100;
+      const emptyTime = 0;
+      const fallTime = quick ? 220 : 360;
       const nextCells: [number, number, number] = last
         ? finalGrid
         : [drawSymbolIndex(), drawSymbolIndex(), drawSymbolIndex()];
@@ -94,12 +94,12 @@ export function ReelColumn({
               } else {
                 cascade(n + 1);
               }
-            }, quick ? 45 : 135);
+            }, last ? 45 : 0);
           }, fallTime);
         }, emptyTime);
       }, crushTime);
     };
-    later(() => cascade(1), 110 + colIndex * (speedRef.current ? 35 : 95));
+    later(() => cascade(1), colIndex * (speedRef.current ? 12 : 20));
     return () => { clear(); busyRef.current = false; };
   }, [spinId, colIndex]);
 
@@ -116,7 +116,7 @@ export function ReelColumn({
           const invisible = hideCells;
           const crushing = phase === 'crush';
           return (
-            <div key={row} className="relative flex items-center justify-center overflow-hidden" style={{ height: TILE_HEIGHT, '--crush-duration': quick ? '120ms' : '240ms' } as React.CSSProperties}>
+            <div key={row} className="relative flex items-center justify-center overflow-hidden" style={{ height: TILE_HEIGHT, '--crush-duration': quick ? '65ms' : '100ms' } as React.CSSProperties}>
               {won && <div className="pointer-events-none absolute inset-2 rounded-xl border-2 border-[#ffe27a] bg-amber-300/15 shadow-[0_0_25px_#ffd65c]" />}
               {!invisible && (
                 <img
@@ -137,7 +137,7 @@ export function ReelColumn({
           style={{
             top: row * TILE_HEIGHT,
             height: TILE_HEIGHT,
-            animation: `tiger-reference-cascade-drop ${quick ? 280 : 510}ms cubic-bezier(.25,.55,.35,1) ${row * (quick ? 18 : 30)}ms both`,
+            animation: `tiger-reference-cascade-drop ${quick ? 190 : 310}ms cubic-bezier(.25,.55,.35,1) ${row * (quick ? 12 : 20)}ms both`,
           }}
         >
           <img src={(SYMBOLS[id] || SYMBOLS[0]).image} alt="" draggable={false} className="tiger-reel-icon object-contain" />
