@@ -24,7 +24,7 @@ export interface SpinEvaluation {
   winningLines: WinningLine[];
   hitCells: Set<string>;
   isFullScreen: boolean;
-  celebrationTier: 'super' | 'mega' | null;
+  celebrationTier: 'super' | 'mega' | 'big' | null;
 }
 
 export interface PersistedState {
@@ -90,7 +90,7 @@ export function evaluateGrid(grid: Grid, bet: number): SpinEvaluation {
 
   const totalWin = Math.round(multiplier * bet * 100) / 100;
   const celebrationTier =
-    multiplier >= 12 ? 'super' : multiplier >= 5 ? 'mega' : null;
+    multiplier >= 12 ? 'super' : multiplier >= 5 ? 'mega' : multiplier > 0 ? 'big' : null;
 
   return {
     multiplier,

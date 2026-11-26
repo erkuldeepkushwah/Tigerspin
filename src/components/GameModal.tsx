@@ -2,14 +2,13 @@ import { useEffect } from 'react';
 import {
   Pause,
   RotateCcw,
-  Settings,
   Smartphone,
   Sparkles,
   Volume2,
   VolumeX,
-  X,
   Zap,
 } from 'lucide-react';
+import { ICON_ASSETS } from '../game/iconAssets';
 import { PAYLINES, SYMBOLS } from '../game/constants';
 
 export type ModalType = 'pause' | 'settings' | 'paytable' | 'lowBalance' | null;
@@ -74,7 +73,7 @@ export function GameModal({
         <div className="mb-4 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5">
             {modal === 'pause' && <Pause className="h-5 w-5 text-[#ffd56b]" />}
-            {modal === 'settings' && <Settings className="h-5 w-5 text-[#ffd56b]" />}
+            {modal === 'settings' && <img src="/assets/icons/super-mega-win-assets/settings.svg" alt="" className="h-6 w-6 object-contain" />}
             {(modal === 'paytable' || modal === 'lowBalance') && (
               <Sparkles className="h-5 w-5 text-[#ffd56b]" />
             )}
@@ -95,7 +94,7 @@ export function GameModal({
             aria-label="Close modal"
             className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e7b964]/45 bg-[#531b11] text-[#ffe9b4] transition-transform active:scale-95 focus-visible:outline-2 focus-visible:outline-[#ffd56b]"
           >
-            <X className="h-5 w-5" />
+            <img src="/assets/icons/mega%20win/exit.png" alt="" className="h-7 w-7 object-contain" />
           </button>
         </div>
 
@@ -230,6 +229,15 @@ export function GameModal({
               </button>
             </div>
 
+            <details className="rounded-xl border border-[#e7b964]/35 p-3">
+              <summary className="cursor-pointer text-sm font-bold">Game artwork library ({ICON_ASSETS.length})</summary>
+              <div className="mt-3 grid grid-cols-3 gap-2">
+                {ICON_ASSETS.map(asset => <figure key={asset.url} className="min-w-0 rounded-lg bg-[#220a06] p-1 text-center">
+                  <img src={asset.url} alt={asset.name} loading="lazy" className="h-16 w-full object-contain" />
+                  <figcaption className="break-all text-[10px]">{asset.group} / {asset.name}</figcaption>
+                </figure>)}
+              </div>
+            </details>
             <p className="pt-1 text-center text-xs text-[#e5be8b]/75">
               Tip: Swipe down on the reels to spin, or tap mid-spin for quick stop.
             </p>

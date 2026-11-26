@@ -27,6 +27,7 @@ export const REELS_TOTAL_WIDTH = REEL_WIDTH * 3 + REEL_GAP * 2; // 591
 
 export const ASSETS = {
   board: '/assets/tiger/board.webp',
+  big: '/assets/icons/big%20win/full-win-overlay.png',
   mega: '/assets/icons/mega%20win/full-mega-win-overlay.png',
   super: '/assets/tiger/super.webp',
 } as const;

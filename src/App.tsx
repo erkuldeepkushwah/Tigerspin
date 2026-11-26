@@ -95,7 +95,7 @@ export default function App() {
   const [evaluation, setEvaluation] = useState<SpinEvaluation | null>(null);
   const [showWinVisuals, setShowWinVisuals] = useState(false);
   const [celebration, setCelebration] = useState<{
-    tier: 'mega' | 'super';
+    tier: 'big' | 'mega' | 'super';
     amount: number;
   } | null>(null);
 
@@ -623,6 +623,9 @@ export default function App() {
           {bannerText}
         </div>
 
+        {/* Uploaded wallet and gold ingot decorations */}
+        <img src="/assets/icons/mega%20win/wallet.png" alt="" className="pointer-events-none absolute object-contain" style={{left: 38, top: 1023, width: 48, height: 48}} />
+        <img src="/assets/icons/Tiger%20Spin%20Icons/gold_ingot.png" alt="" className="pointer-events-none absolute object-contain" style={{left: 488, top: 1023, width: 48, height: 48}} />
         {/* Credits, Bet, Win Readouts */}
         <div
           aria-label={`Balance ${formatINR(balance)}`}
