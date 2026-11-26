@@ -176,13 +176,16 @@ export function WinCelebration({
             </g>
             <text x="337" y="1060" textAnchor="middle" fontSize="62" fontWeight="bold" fill="#ffdf77">虎</text>
           </svg>
-          <img src="/assets/tiger/dancing-tiger.png" alt="" draggable={false} className="tiger-win-character pointer-events-none absolute left-[16%] top-[17%] h-[25%] w-[68%] object-contain"  />
+          <div className="tiger-win-character pointer-events-none absolute left-[16%] top-[17%] h-[25%] w-[68%]">
+            <img src="/assets/tiger/dancing-tiger.png" alt="" draggable={false} className="tiger-pose-one absolute inset-0 h-full w-full object-contain" />
+            <img src="/assets/tiger/dancing-tiger2.png" alt="" draggable={false} className="tiger-pose-two absolute inset-0 h-full w-full object-contain" />
+          </div>
           <div className="pointer-events-none absolute left-[4%] top-[42%] w-[92%] text-center font-black italic leading-[.93]" style={{fontSize:tier === 'super'?88:100,color:'#ffe294',WebkitTextStroke:'5px #7230a3',paintOrder:'stroke fill',textShadow:'0 7px 0 #54217a,0 0 14px #ffcf70'}}>
             {tier === 'super' ? <>SUPER<br/>MEGA WIN</> : 'MEGA WIN'}
           </div>
         </>
       )}
-      <style>{`@keyframes tigerWinDance { 0%,100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-12px) rotate(3deg); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-10px) rotate(-3deg); } } .tiger-win-character { animation: tigerWinDance 1.15s ease-in-out infinite; transform-origin:center bottom; } @media(prefers-reduced-motion:reduce){.tiger-win-character{animation:none;}}`}</style>
+      <style>{`@keyframes tigerWinDance { 0%,100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-12px) rotate(3deg); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-10px) rotate(-3deg); } } .tiger-win-character { animation: tigerWinDance 1.15s ease-in-out infinite; transform-origin:center bottom; } @keyframes tigerPoseOne{0%,49.99%{opacity:1}50%,100%{opacity:0}} @keyframes tigerPoseTwo{0%,49.99%{opacity:0}50%,100%{opacity:1}} .tiger-pose-one{animation:tigerPoseOne .8s step-end infinite} .tiger-pose-two{animation:tigerPoseTwo .8s step-end infinite} @media(prefers-reduced-motion:reduce){.tiger-win-character,.tiger-pose-one,.tiger-pose-two{animation:none;}.tiger-pose-two{opacity:0;}}`}</style>
       {/* Falling gold coin shower */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         {coins.map((c) => (
