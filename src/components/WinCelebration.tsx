@@ -176,7 +176,7 @@ export function WinCelebration({
             </g>
             <text x="337" y="1060" textAnchor="middle" fontSize="62" fontWeight="bold" fill="#ffdf77">虎</text>
           </svg>
-          <img src={tier === 'super' ? '/assets/icons/super-mega-win-assets/tiger-character.png.svg' : '/assets/icons/mega%20win/tiger-character.png.svg'} alt="" draggable={false} className="tiger-win-character pointer-events-none absolute left-[16%] top-[17%] h-[25%] w-[68%] object-contain" style={{maskImage:'radial-gradient(ellipse at 50% 48%, black 53%, transparent 74%)'}} />
+          <img src="/assets/tiger/dancing-tiger.png" alt="" draggable={false} className="tiger-win-character pointer-events-none absolute left-[16%] top-[17%] h-[25%] w-[68%] object-contain"  />
           <div className="pointer-events-none absolute left-[4%] top-[42%] w-[92%] text-center font-black italic leading-[.93]" style={{fontSize:tier === 'super'?88:100,color:'#ffe294',WebkitTextStroke:'5px #7230a3',paintOrder:'stroke fill',textShadow:'0 7px 0 #54217a,0 0 14px #ffcf70'}}>
             {tier === 'super' ? <>SUPER<br/>MEGA WIN</> : 'MEGA WIN'}
           </div>
