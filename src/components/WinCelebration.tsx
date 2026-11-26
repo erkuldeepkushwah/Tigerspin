@@ -137,26 +137,18 @@ export function WinCelebration({
         alt={tier === 'super' ? 'Super Mega Win' : tier === 'big' ? 'Big Win' : 'Mega Win'}
         draggable={false}
         className="pointer-events-none absolute inset-0 h-full w-full object-contain"
-        style={tier === 'big' ? { clipPath: 'inset(0 0 28% 0)' } : undefined}
+        style={tier === 'big' ? { clipPath: 'inset(0 0 28% 0)' } : { clipPath: 'inset(34% 0 0 0)' }}
       />
 
-      {tier === 'super' && <img src="/assets/icons/super-mega-win-assets/super-mega-win.png.svg" alt="" className="pointer-events-none absolute left-[12%] top-[24%] w-[76%] object-contain" />}
       {/* Individual uploaded artwork accents, separate from the full cabinet overlay. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {tier === 'big' ? <>
           <img src="/assets/icons/big%20win/golden-bull.png.svg" alt="" draggable={false} className="tiger-win-character absolute left-[15%] top-[66%] h-[24%] w-[70%] object-contain" />
           <img src="/assets/icons/big%20win/coin-stack.png.svg" alt="" className="absolute bottom-[20%] right-[5%] h-[8%] w-[18%] object-contain" />
-        </> : tier === 'mega' ? <>
-          <img src="/assets/icons/mega%20win/pink-petal.png.svg" alt="" className="absolute left-[5%] top-[17%] h-[6%] w-[12%] object-contain" />
-          <img src="/assets/icons/mega%20win/red-envelope.png.svg" alt="" className="absolute right-[5%] top-[17%] h-[7%] w-[14%] object-contain" />
-          <img src="/assets/icons/mega%20win/coin-stack.png.svg" alt="" className="absolute bottom-[20%] right-[5%] h-[8%] w-[18%] object-contain" />
-        </> : <>
-          <img src="/assets/icons/super-mega-win-assets/decorative-frame.svg" alt="" className="absolute inset-0 h-full w-full object-contain" />
-          <img src="/assets/icons/super-mega-win-assets/red-envelope.svg" alt="" className="absolute right-[5%] top-[17%] h-[7%] w-[14%] object-contain" />
-        </>}
+        </> : null}
       </div>
-      {/* Animated character artwork on win */}
-      {tier !== 'big' && <img src={tier === 'super' ? '/assets/icons/super-mega-win-assets/tiger-character.png.svg' : '/assets/icons/mega%20win/tiger-character.png.svg'} alt="" draggable={false} className="tiger-win-character pointer-events-none absolute left-[30%] top-[6%] h-[20%] w-[40%] object-contain" />}
+      {/* Animate the original overlay's upper tiger region, rather than adding a second cropped character. */}
+      {tier !== 'big' && <img src={tier === 'super' ? ASSETS.super : ASSETS.mega} alt="" draggable={false} className="tiger-win-character pointer-events-none absolute inset-0 h-full w-full object-contain" style={{clipPath: 'inset(0 0 66% 0)', transformOrigin: '50% 34%'}} />}
       <style>{`@keyframes tigerWinDance { 0%,100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-16px) rotate(3deg) scale(1.04); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-12px) rotate(-3deg) scale(1.03); } } .tiger-win-character { animation: tigerWinDance 1.15s ease-in-out infinite; transform-origin: center bottom; } @media (prefers-reduced-motion: reduce) { .tiger-win-character { animation: none; } }`}</style>
       {/* Falling gold coin shower */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -210,7 +202,7 @@ export function WinCelebration({
       {/* Animated winning amount aligned precisely to original artwork slot (top: 729px) */}
       <div
         className="tiger-prize-amount font-cabinet-serif pointer-events-none absolute left-0 w-full text-center text-[56px] font-black leading-none tracking-tight"
-        style={{ top: 729 }}
+        style={{ top: tier === 'mega' ? 800 : 729, ...(tier === 'mega' ? { background: 'radial-gradient(ellipse,#fff0a0 0%,#ffd85d 65%,#efae29 100%)', color: '#9a310d', textShadow: '0 2px 0 #fff4b0', left: '15%', width: '70%', borderRadius: 18, padding: '12px 0' } : {}) }}
       >
         {formatINR(displayAmount)}
       </div>
