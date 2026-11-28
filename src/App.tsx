@@ -766,7 +766,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.settings}
         >
-          <img src="/assets/icons/settings_icon.png" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
+          <img src="/assets/icons/settings_icon.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 block h-full w-full object-contain object-center" />
         </button>
 
         {/* Turbo Toggle Button */}
