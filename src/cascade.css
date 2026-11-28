@@ -75,3 +75,14 @@
   100% { transform: scale(.35); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .tiger-reference-crush, .tiger-reference-sparkles { animation: none !important; } }
+
+/* Winning payline reveal, then symbol crush before celebration. */
+@keyframes tiger-winning-crush {
+  0%, 38% { transform: scale(1); opacity: 1; filter: brightness(1.25); }
+  54% { transform: scale(1.14,.9); opacity: 1; filter: brightness(2); }
+  78% { transform: scale(.55) rotate(9deg); opacity: .45; filter: brightness(2.2); }
+  100% { transform: scale(.12); opacity: 0; }
+}
+.tiger-winning-crush { animation: tiger-winning-crush 950ms ease-in-out both; }
+.tiger-winning-sparks { background: radial-gradient(circle, #fff7c7 0 4%, #ffd259 6% 10%, transparent 35%); animation: tiger-cascade-sparks 500ms 420ms ease-out both; }
+@media (prefers-reduced-motion: reduce) { .tiger-winning-crush, .tiger-winning-sparks { animation: none !important; } }

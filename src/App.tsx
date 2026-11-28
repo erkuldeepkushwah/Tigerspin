@@ -94,6 +94,8 @@ export default function App() {
   const bonusRef = useRef({ remaining: 0, collected: 0 });
   const freeSpinRef = useRef(false);
   const celebrationOpenRef = useRef(false);
+  const celebrationTimerRef = useRef<number | null>(null);
+  const [winCrush, setWinCrush] = useState(false);
 
   const [lastWin, setLastWin] = useState(0);
   const [evaluation, setEvaluation] = useState<SpinEvaluation | null>(null);
@@ -242,6 +244,7 @@ export default function App() {
     setLastWin(0);
     setEvaluation(null);
     setShowWinVisuals(false);
+    setWinCrush(false);
     setCelebration(null);
     setSpinning(true);
     setGrid(nextGrid);
@@ -338,10 +341,13 @@ export default function App() {
 
         if (res.celebrationTier) {
           celebrationOpenRef.current = true;
-          setCelebration({
-            tier: res.celebrationTier,
-            amount: res.totalWin,
-          });
+          const tier = res.celebrationTier;
+          const amount = res.totalWin;
+          setWinCrush(true);
+          celebrationTimerRef.current = window.setTimeout(() => {
+            celebrationTimerRef.current = null;
+            setCelebration({ tier, amount });
+          }, 1100);
           // Auto-spin will resume cleanly when celebration dismisses
           return;
         }
@@ -361,6 +367,7 @@ export default function App() {
 
   const handleDismissCelebration = useCallback(() => {
     celebrationOpenRef.current = false;
+    setWinCrush(false);
     setCelebration(null);
     if (autoSpinRef.current) {
       scheduleNextAutoSpin(turboRef.current ? 300 : 520);
@@ -382,6 +389,9 @@ export default function App() {
 
   // Cleanup timers on unmount
   useEffect(() => clearAutoTimer, [clearAutoTimer]);
+  useEffect(() => () => {
+    if (celebrationTimerRef.current !== null) window.clearTimeout(celebrationTimerRef.current);
+  }, []);
 
   // Bet stepping handlers
   const stepBet = useCallback(
@@ -611,6 +621,7 @@ export default function App() {
               pullOffset={pullOffset}
               hitCells={hitCells}
               showWin={showWinVisuals}
+              winCrush={winCrush}
               onColumnTouchdown={handleColumnTouchdown}
               onColumnSettled={handleColumnSettled}
             />

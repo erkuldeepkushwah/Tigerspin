@@ -11,6 +11,7 @@ interface ReelColumnProps {
   pullOffset: number;
   hitCells: Set<string>;
   showWin: boolean;
+  winCrush: boolean;
   onColumnTouchdown: (colIndex: number, hasWild: boolean) => void;
   onColumnSettled: (colIndex: number) => void;
 }
@@ -20,7 +21,7 @@ const DROP_COUNT = 5;
 
 export function ReelColumn({
   colIndex, symbols, spinId, turbo, slamSignal, pullOffset,
-  hitCells, showWin, onColumnTouchdown, onColumnSettled,
+  hitCells, showWin, winCrush, onColumnTouchdown, onColumnSettled,
 }: ReelColumnProps) {
   const [cells, setCells] = useState<[number, number, number]>(symbols);
   const [incoming, setIncoming] = useState<[number, number, number]>(symbols);
@@ -122,9 +123,10 @@ export function ReelColumn({
                 <img
                   key={`${row}-${id}`}
                   src={symbol.image} alt={symbol.label} draggable={false}
-                  className={`relative tiger-reel-icon object-contain ${crushing ? 'tiger-reference-crush' : ''} ${won ? 'animate-win-tile' : ''} ${!busy && showWin && !won ? 'opacity-50' : ''}`}
+                  className={`relative tiger-reel-icon object-contain ${crushing ? 'tiger-reference-crush' : ''} ${won ? (winCrush ? 'tiger-winning-crush' : 'animate-win-tile') : ''} ${!busy && showWin && !won ? 'opacity-50' : ''}`}
                 />
               )}
+              {won && winCrush && <div className="tiger-winning-sparks pointer-events-none absolute inset-0" />}
               {crushing && <div className="tiger-reference-sparkles pointer-events-none absolute inset-0" />}
             </div>
           );
