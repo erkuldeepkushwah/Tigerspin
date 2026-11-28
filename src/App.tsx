@@ -166,6 +166,8 @@ export default function App() {
   useEffect(() => {
     const urls = [
       ASSETS.board,
+      ASSETS.topBackground,
+      ASSETS.topTiger,
       ASSETS.mega,
       ASSETS.super,
       '/assets/tiger/golden-win-background.png',
@@ -605,6 +607,12 @@ export default function App() {
           draggable={false}
           className="pointer-events-none absolute inset-0 h-full w-full select-none"
         />
+
+        {/* Uploaded top scenery and independently animated tiger. */}
+        <div aria-hidden="true" className="tiger-top-scene pointer-events-none absolute inset-x-0 top-0 overflow-hidden" style={{height: REEL_TOP}}>
+          <img src={ASSETS.topBackground} alt="" draggable={false} className="tiger-top-background absolute inset-0 h-full w-full object-cover" />
+          <img src={ASSETS.topTiger} alt="" draggable={false} className={`tiger-top-character absolute object-contain ${winCrush || celebration ? 'tiger-top-character-winning' : ''}`} />
+        </div>
 
         {/* Cover baked-in symbols and control artwork; only live SVG icons are visible. */}
         <div aria-hidden="true" className="pointer-events-none absolute" style={{top: REEL_TOP, left: REEL_LEFT, width: REELS_TOTAL_WIDTH, height: REEL_HEIGHT, borderRadius: 12, background: 'linear-gradient(90deg,#d9a96b,#fff2ce 12%,#fce9bb 88%,#d9a96b)'}} />

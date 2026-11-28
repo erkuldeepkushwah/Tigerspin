@@ -26,7 +26,9 @@ export const REEL_HEIGHT = TILE_HEIGHT * 3; // 546
 export const REELS_TOTAL_WIDTH = REEL_WIDTH * 3 + REEL_GAP * 2; // 591
 
 export const ASSETS = {
-  board: '/assets/tiger/board.webp.svg',
+  board: '/assets/tiger/board.webp',
+  topBackground: '/assets/icons/top%20tiger%20baground.png',
+  topTiger: '/assets/icons/top%20tiger.png',
   big: '/assets/icons/big%20win/full-win-overlay.png.svg',
   mega: '/assets/icons/mega%20win/full-mega-win-overlay.png.svg',
   super: '/assets/tiger/super.webp.svg',

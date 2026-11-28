@@ -107,3 +107,16 @@
 @keyframes tiger-match-reveal { 0% { opacity: .65; } 16%,55% { opacity: 1; } 72% { opacity: .9; } 100% { opacity: .28; } }
 .tiger-match-aura-crush { animation: tiger-match-reveal 1450ms ease-in-out both; }
 @media (prefers-reduced-motion: reduce) { .tiger-respect-motion .tiger-match-aura-crush { animation: none; } }
+
+/* The uploaded top tiger moves independently of the fixed scenery. */
+.tiger-top-scene { isolation: isolate; }
+.tiger-top-background { object-position: center center; }
+.tiger-top-character { left: 18%; bottom: 0; width: 64%; height: 70%; object-position: center bottom; transform-origin: 50% 95%; }
+@keyframes tiger-top-win-move {
+  0%,100% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
+  22% { transform: translate3d(-5px,-9px,0) rotate(-3deg) scale(1.035); }
+  48% { transform: translate3d(2px,-16px,0) rotate(2deg) scale(1.06); }
+  74% { transform: translate3d(6px,-6px,0) rotate(3deg) scale(1.025); }
+}
+.tiger-top-character-winning { animation: tiger-top-win-move 800ms ease-in-out infinite; will-change: transform; }
+@media (prefers-reduced-motion: reduce) { .tiger-respect-motion .tiger-top-character-winning { animation: none; } }
