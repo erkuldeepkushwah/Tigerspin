@@ -153,7 +153,7 @@ export default function App() {
     });
   }, [balance, betIndex, soundEnabled, turbo, hapticsEnabled]);
 
-  // Preload all cabinet, celebration, and symbol WebP images once
+  // Preload all cabinet, celebration, and symbol images once
   useEffect(() => {
     const urls = [
       ASSETS.board,
@@ -628,9 +628,11 @@ export default function App() {
           {bannerText}
         </div>
 
-        {/* Uploaded wallet and gold ingot decorations */}
-        <img src="/assets/icons/mega%20win/wallet.png.svg" alt="" className="pointer-events-none absolute object-contain" style={{left: 38, top: 1023, width: 48, height: 48}} />
-        <img src="/assets/icons/Tiger%20Spin%20Icons/gold_ingot.png.svg" alt="" className="pointer-events-none absolute object-contain" style={{left: 488, top: 1023, width: 48, height: 48}} />
+        {/* Balance, bet, and win icons */}
+        <img src="/assets/tiger-spin-svg/15-wallet.svg" alt="" className="pointer-events-none absolute object-contain" style={{left: 38, top: 1023, width: 48, height: 48}} />
+        <img src="/assets/tiger-spin-svg/06-gold-ingot.svg" alt="" className="pointer-events-none absolute object-contain" style={{left: 488, top: 1023, width: 48, height: 48}} />
+        <img src="/assets/tiger-spin-svg/16-bet-coins.svg" alt="" className="pointer-events-none absolute object-contain" style={{left: 328, top: 1023, width: 48, height: 48}} />
+        <img src="/assets/tiger-spin-svg/17-win.svg" alt="" className="pointer-events-none absolute object-contain" style={{left: 553, top: 1023, width: 48, height: 48}} />
         {/* Credits, Bet, Win Readouts */}
         <div
           aria-label={`Balance ${formatINR(balance)}`}
@@ -685,7 +687,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.pause}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/exit.png.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
+          <img src="/assets/tiger-spin-svg/14-exit.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
         </button>
 
         {/* Settings Button */}
@@ -705,7 +707,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.settings}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/settings.png.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
+          <img src="/assets/tiger-spin-svg/13-settings.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
         </button>
 
         {/* Turbo Toggle Button */}
@@ -720,7 +722,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.turbo}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/turbo.png.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
+          <img src="/assets/tiger-spin-svg/10-turbo.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
           {turbo && (
             <>
               <span
@@ -757,7 +759,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.minus}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/minus.png.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
+          <img src="/assets/tiger-spin-svg/11-minus.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
         </button>
 
         {/* Main Spin Button */}
@@ -771,7 +773,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.spin}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/spin.png.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[6%] h-[88%] w-[88%] object-contain" />
+          <img src="/assets/tiger-spin-svg/08-spin.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[6%] h-[88%] w-[88%] object-contain" />
           {spinning && (
             <span
               aria-hidden="true"
@@ -802,7 +804,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.plus}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/plus.png.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
+          <img src="/assets/tiger-spin-svg/12-plus.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
         </button>
 
         {/* Auto-Spin Toggle Button */}
@@ -817,7 +819,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.auto}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/auto.png.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
+          <img src="/assets/tiger-spin-svg/09-auto-spin.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
           {autoSpin && (
             <>
               <span
