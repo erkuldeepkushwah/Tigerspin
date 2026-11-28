@@ -280,7 +280,7 @@ export function GameModal({
                   5 Active Paylines
                 </span>
                 <span className="text-xs font-bold text-[#8cf8b0]">
-                  Full Screen = ×10
+                  9 Wild Tigers = Super Mega Win
                 </span>
               </div>
 
@@ -314,7 +314,7 @@ export function GameModal({
               </div>
 
               <p className="mt-2.5 text-xs leading-relaxed text-[#f2d4a0]/85">
-                Tiger Wild substitutes for any symbol. Fill all 9 positions with matching symbols for a ×10 full-screen multiplier!
+                Three identical regular symbols on an active payline trigger Big Win. Three Wild Tigers on a payline trigger Mega Win and 10 free spins. Collect 9 Wild Tigers during free spins or land 9 Wild Tigers on the board for Super Mega Win. Free spins use no demo credits.
               </p>
             </div>
 
