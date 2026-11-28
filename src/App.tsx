@@ -619,7 +619,7 @@ export default function App() {
         {/* Cover baked-in symbols and control artwork; only live SVG icons are visible. */}
         <div aria-hidden="true" className="pointer-events-none absolute" style={{top: REEL_TOP, left: REEL_LEFT, width: REELS_TOTAL_WIDTH, height: REEL_HEIGHT, borderRadius: 12, background: 'linear-gradient(90deg,#d9a96b,#fff2ce 12%,#fce9bb 88%,#d9a96b)'}} />
         {Object.entries(HOTSPOTS).map(([key, rect]) => (
-          <div key={key} aria-hidden="true" className="pointer-events-none absolute" style={{...rect, borderRadius: '50%', background: 'radial-gradient(ellipse at 50% 35%, #8d291b, #4b100c 75%)', boxShadow: '0 0 0 3px #a76b32'}} />
+          <div key={key} aria-hidden="true" className="pointer-events-none absolute" style={{...rect, borderRadius: '50%', background: 'radial-gradient(ellipse at 50% 35%, #8d291b, #4b100c 75%)', boxShadow: key === 'settings' ? 'none' : '0 0 0 3px #a76b32'}} />
         ))}
         {/* 3 Fluid Physics Reel Columns */}
         <div
@@ -766,7 +766,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.settings}
         >
-          <img src="/assets/icons/settings_icon.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 block h-full w-full object-contain object-center" />
+          <img src="/assets/icons/settings_icon.png" alt="" draggable={false} className="pointer-events-none absolute inset-0 block h-full w-full object-contain object-center" style={{ clipPath: 'circle(44% at 48% 48%)', WebkitClipPath: 'circle(44% at 48% 48%)', transform: 'translate(2%, 2%) scale(1.13)' }} />
         </button>
 
         {/* Turbo Toggle Button */}
