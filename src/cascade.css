@@ -95,5 +95,6 @@
 }
 @keyframes tiger-reduced-drop { from { opacity: .35; } to { opacity: 1; } }
 @keyframes tiger-reduced-crush { from { opacity: 1; } to { opacity: .15; } }
-.tiger-reel-reduced > div[style*="animation"] { animation-name: tiger-reduced-drop !important; }
+.tiger-reel-reduced .tiger-falling-symbol { animation-name: tiger-gentle-drop !important; }
+@keyframes tiger-gentle-drop { from { transform: translate3d(0,-48px,0); opacity: .4; } to { transform: translate3d(0,0,0); opacity: 1; } }
 .tiger-reel-reduced .tiger-reference-crush, .tiger-reel-reduced .tiger-winning-crush { animation: tiger-reduced-crush 120ms linear both !important; }

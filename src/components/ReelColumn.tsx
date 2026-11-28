@@ -69,9 +69,9 @@ export function ReelColumn({
     const cascade = (n: number) => {
       const last = n === DROP_COUNT;
       const quick = speedRef.current || fastRef.current;
-      const mobile = window.matchMedia('(pointer: coarse)').matches;
+      const mobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768;
       const crushTime = mobile ? (quick ? 110 : 150) : (quick ? 65 : 100);
-      const fallTime = mobile ? (quick ? 300 : 420) : (quick ? 240 : 380);
+      const fallTime = mobile ? (quick ? 460 : 620) : (quick ? 240 : 380);
       const nextCells: [number, number, number] = last
         ? finalGrid
         : [drawSymbolIndex(), drawSymbolIndex(), drawSymbolIndex()];
@@ -106,6 +106,7 @@ export function ReelColumn({
   const busy = phase !== 'idle';
   const hideCells = phase === 'empty' || phase === 'falling';
   const quick = turbo || fastRef.current;
+  const touch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768;
   return (
     <div className={`relative overflow-hidden rounded-[12px] tiger-reel-column ${reducedMotionClass()}`} style={{ width: REEL_WIDTH, height: REEL_HEIGHT }}>
       <div className="pointer-events-none absolute inset-0 z-[5] bg-gradient-to-b from-black/10 via-transparent to-black/15" />
@@ -134,11 +135,11 @@ export function ReelColumn({
       {phase === 'falling' && incoming.map((id, row) => (
         <div
           key={`${spinId}-${wave}-fall-${row}`}
-          className="pointer-events-none absolute inset-x-0 z-[3] flex items-center justify-center"
+          className="tiger-falling-symbol pointer-events-none absolute inset-x-0 z-[3] flex items-center justify-center"
           style={{
             top: row * TILE_HEIGHT,
             height: TILE_HEIGHT,
-            animation: `tiger-reference-cascade-drop ${quick ? 190 : 310}ms cubic-bezier(.25,.55,.35,1) ${row * (quick ? 12 : 20)}ms both`,
+            animation: `tiger-reference-cascade-drop ${touch ? (quick ? 390 : 520) : (quick ? 190 : 310)}ms cubic-bezier(.25,.55,.35,1) ${row * (quick ? 12 : 20)}ms both`,
           }}
         >
           <img src={(SYMBOLS[id] || SYMBOLS[0]).image} alt="" draggable={false} className="tiger-reel-icon object-contain" />
