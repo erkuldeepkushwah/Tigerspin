@@ -54,6 +54,17 @@ export function generateSpinGrid(): Grid {
   ];
 }
 
+// Scripted practice mode: virtual demo credits only, not a fair random gambling simulation.
+export function generatePracticeGrid(lossStreak: number): Grid {
+  const grid = generateSpinGrid();
+  if (lossStreak < 3 || evaluateGrid(grid, 1).multiplier > 0) return grid;
+  const regular = SYMBOLS.filter((symbol) => !symbol.isWild);
+  const symbol = regular[Math.floor(Math.random() * regular.length)].id;
+  const line = PAYLINES[Math.floor(Math.random() * PAYLINES.length)];
+  line.rows.forEach((row, col) => { grid[col][row] = symbol; });
+  return grid;
+}
+
 export function evaluateGrid(grid: Grid, bet: number): SpinEvaluation {
   let multiplier = 0;
   const winningLines: WinningLine[] = [];

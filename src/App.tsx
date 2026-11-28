@@ -24,7 +24,7 @@ import {
 } from './game/constants';
 import {
   evaluateGrid,
-  generateSpinGrid,
+  generatePracticeGrid,
   loadPersistedState,
   savePersistedState,
   type SpinEvaluation,
@@ -93,6 +93,7 @@ export default function App() {
   const [bonus, setBonus] = useState({ remaining: 0, collected: 0 });
   const bonusRef = useRef({ remaining: 0, collected: 0 });
   const freeSpinRef = useRef(false);
+  const practiceLossStreakRef = useRef(0);
   const celebrationOpenRef = useRef(false);
   const celebrationTimerRef = useRef<number | null>(null);
   const [winCrush, setWinCrush] = useState(false);
@@ -233,7 +234,7 @@ export default function App() {
 
     freeSpinRef.current = free;
     const nextBalance = free ? balanceRef.current : Math.round((balanceRef.current - currentBet) * 100) / 100;
-    const nextGrid = generateSpinGrid();
+    const nextGrid = generatePracticeGrid(practiceLossStreakRef.current);
     const nextEval = evaluateGrid(nextGrid, currentBet);
 
     spinningRef.current = true;
@@ -316,6 +317,7 @@ export default function App() {
       }
       bonusRef.current = next;
       setBonus(next);
+      practiceLossStreakRef.current = res.totalWin > 0 ? 0 : practiceLossStreakRef.current + 1;
       setEvaluation(res);
 
       if (res.totalWin > 0) {
@@ -544,6 +546,7 @@ export default function App() {
   const handleResetBalance = useCallback(() => {
     soundEngine.playButtonClick(520);
     setBalance(DEFAULT_BALANCE);
+    practiceLossStreakRef.current = 0;
     bonusRef.current = { remaining: 0, collected: 0 };
     setBonus(bonusRef.current);
     setLastWin(0);
@@ -701,7 +704,7 @@ export default function App() {
           className="pointer-events-none absolute left-0 w-full text-center text-[15px] font-extrabold tracking-[0.14em] text-[#ffd498]/75"
           style={{ top: 1370 }}
         >
-          DEMO CREDITS
+          PRACTICE MODE · SCRIPTED WINS · DEMO CREDITS
         </div>
 
         {/* === INTERACTIVE BOARD HOTSPOTS (aligned pixel-for-pixel to board.webp) === */}
