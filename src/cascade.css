@@ -86,3 +86,14 @@
 .tiger-winning-crush { animation: tiger-winning-crush 950ms ease-in-out both; }
 .tiger-winning-sparks { background: radial-gradient(circle, #fff7c7 0 4%, #ffd259 6% 10%, transparent 35%); animation: tiger-cascade-sparks 500ms 420ms ease-out both; }
 @media (prefers-reduced-motion: reduce) { .tiger-winning-crush, .tiger-winning-sparks { animation: none !important; } }
+
+/* Keep every cascade visible on touch browsers; use fades instead of travel for reduced motion. */
+.tiger-reel-column { isolation: isolate; }
+.tiger-reel-column .tiger-reel-icon { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+@media (pointer: coarse) {
+  .tiger-reel-column .tiger-reel-icon { transform: translateZ(0); }
+}
+@keyframes tiger-reduced-drop { from { opacity: .35; } to { opacity: 1; } }
+@keyframes tiger-reduced-crush { from { opacity: 1; } to { opacity: .15; } }
+.tiger-reel-reduced > div[style*="animation"] { animation-name: tiger-reduced-drop !important; }
+.tiger-reel-reduced .tiger-reference-crush, .tiger-reel-reduced .tiger-winning-crush { animation: tiger-reduced-crush 120ms linear both !important; }

@@ -18,6 +18,9 @@ interface ReelColumnProps {
 
 type Phase = 'idle' | 'crush' | 'empty' | 'falling' | 'landed';
 const DROP_COUNT = 5;
+function reducedMotionClass() {
+  return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'tiger-reel-reduced' : '';
+}
 
 export function ReelColumn({
   colIndex, symbols, spinId, turbo, slamSignal, pullOffset,
@@ -34,6 +37,7 @@ export function ReelColumn({
   const fastRef = useRef(false);
   const busyRef = useRef(false);
   const timers = useRef<number[]>([]);
+  const frames = useRef<number[]>([]);
   const cbRef = useRef({ onColumnTouchdown, onColumnSettled });
   cbRef.current = { onColumnTouchdown, onColumnSettled };
   const later = (fn: () => void, ms: number) => {
@@ -42,6 +46,13 @@ export function ReelColumn({
   const clear = () => {
     timers.current.forEach(window.clearTimeout);
     timers.current = [];
+    frames.current.forEach(window.cancelAnimationFrame);
+    frames.current = [];
+  };
+  const afterPaint = (fn: () => void) => {
+    frames.current.push(window.requestAnimationFrame(() => {
+      frames.current.push(window.requestAnimationFrame(fn));
+    }));
   };
 
   useEffect(() => {
@@ -54,36 +65,24 @@ export function ReelColumn({
     fastRef.current = false;
     busyRef.current = true;
     const finalGrid = [...desiredRef.current] as [number, number, number];
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) {
-      setCells(finalGrid);
-      setPhase('idle');
-      later(() => {
-        busyRef.current = false;
-        cbRef.current.onColumnTouchdown(colIndex, finalGrid.includes(WILD_ID));
-        cbRef.current.onColumnSettled(colIndex);
-      }, 60 + colIndex * 60);
-      return () => { clear(); busyRef.current = false; };
-    }
-
     // All three rows participate in each of the five cascades.
     const cascade = (n: number) => {
       const last = n === DROP_COUNT;
       const quick = speedRef.current || fastRef.current;
-      const crushTime = quick ? 65 : 100;
-      const emptyTime = 0;
-      const fallTime = quick ? 220 : 360;
+      const mobile = window.matchMedia('(pointer: coarse)').matches;
+      const crushTime = mobile ? (quick ? 110 : 150) : (quick ? 65 : 100);
+      const fallTime = mobile ? (quick ? 300 : 420) : (quick ? 240 : 380);
       const nextCells: [number, number, number] = last
         ? finalGrid
         : [drawSymbolIndex(), drawSymbolIndex(), drawSymbolIndex()];
       setWave(n);
       setPhase('crush');
-      later(() => {
+      afterPaint(() => later(() => {
         setPhase('empty');
-        later(() => {
+        afterPaint(() => {
           setIncoming(nextCells);
           setPhase('falling');
-          later(() => {
+          afterPaint(() => later(() => {
             setCells(nextCells);
             setPhase('landed');
             if (last) cbRef.current.onColumnTouchdown(colIndex, finalGrid.includes(WILD_ID));
@@ -95,10 +94,10 @@ export function ReelColumn({
               } else {
                 cascade(n + 1);
               }
-            }, last ? 45 : 0);
-          }, fallTime);
-        }, emptyTime);
-      }, crushTime);
+            }, last ? 45 : 55);
+          }, fallTime));
+        });
+      }, crushTime));
     };
     later(() => cascade(1), colIndex * (speedRef.current ? 12 : 20));
     return () => { clear(); busyRef.current = false; };
@@ -108,7 +107,7 @@ export function ReelColumn({
   const hideCells = phase === 'empty' || phase === 'falling';
   const quick = turbo || fastRef.current;
   return (
-    <div className="relative overflow-hidden rounded-[12px]" style={{ width: REEL_WIDTH, height: REEL_HEIGHT }}>
+    <div className={`relative overflow-hidden rounded-[12px] tiger-reel-column ${reducedMotionClass()}`} style={{ width: REEL_WIDTH, height: REEL_HEIGHT }}>
       <div className="pointer-events-none absolute inset-0 z-[5] bg-gradient-to-b from-black/10 via-transparent to-black/15" />
       <div style={{ transform: !busy ? `translateY(${Math.min(38, Math.max(0,pullOffset)) * (0.86 + colIndex * .09)}px)` : undefined }}>
         {cells.map((id, row) => {
