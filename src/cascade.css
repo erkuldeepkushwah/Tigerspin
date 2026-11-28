@@ -90,9 +90,7 @@
 /* Keep every cascade visible on touch browsers; use fades instead of travel for reduced motion. */
 .tiger-reel-column { isolation: isolate; }
 .tiger-reel-column .tiger-reel-icon { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-@media (pointer: coarse) {
-  .tiger-reel-column .tiger-reel-icon { transform: translateZ(0); }
-}
+
 @keyframes tiger-reduced-drop { from { opacity: .35; } to { opacity: 1; } }
 @keyframes tiger-reduced-crush { from { opacity: 1; } to { opacity: .15; } }
 .tiger-reel-reduced .tiger-falling-symbol { animation-name: tiger-gentle-drop !important; }

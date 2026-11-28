@@ -34,7 +34,6 @@ export function WinCelebration({
   onDismiss,
 }: WinCelebrationProps) {
   const [displayAmount, setDisplayAmount] = useState(0);
-  const touch = typeof window !== 'undefined' && (window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768);
 
   const coins = useMemo<CoinParticle[]>(
     () =>
@@ -103,10 +102,10 @@ export function WinCelebration({
   useEffect(() => {
     if (!tier) return;
     const countMs = tier === 'super' ? 5000 : tier === 'mega' ? 4000 : 3000;
-    const timeoutMs = countMs + (touch ? 3000 : autoSpinActive ? 800 : 2000);
+    const timeoutMs = countMs + (autoSpinActive ? 800 : 2000);
     const timer = window.setTimeout(onDismiss, timeoutMs);
     return () => window.clearTimeout(timer);
-  }, [tier, autoSpinActive, onDismiss, touch]);
+  }, [tier, autoSpinActive, onDismiss]);
 
   if (!tier) return null;
 
@@ -122,7 +121,7 @@ export function WinCelebration({
           if (displayAmount >= amount) onDismiss();
         }
       }}
-      className={`tiger-celebration-screen absolute inset-0 z-[100] cursor-pointer overflow-hidden bg-black/90 ${touch ? "" : "animate-overlay-in backdrop-blur-[2px]"}`}
+      className="tiger-celebration-screen animate-overlay-in absolute inset-0 z-[100] cursor-pointer overflow-hidden bg-black/90"
       style={{
         width: BOARD_WIDTH,
         height: BOARD_HEIGHT,
@@ -164,7 +163,7 @@ export function WinCelebration({
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         {[{x:12,y:77,d:0},{x:86,y:80,d:.7},{x:88,y:18,d:1.3},{x:15,y:24,d:2}].map((burst,i)=>(
           <div key={i} className="absolute" style={{left:burst.x+'%',top:burst.y+'%'}}>
-            {Array.from({length:touch ? 8 : 18},(_,j)=>(
+            {Array.from({length:18},(_,j)=>(
               <span key={j} className="tiger-firework-ray absolute" style={{'--angle':(j*20)+'deg','--distance':(55+(j%4)*18)+'px',animationDelay:burst.d+'s'} as CSSProperties}/>
             ))}
           </div>
@@ -189,7 +188,7 @@ export function WinCelebration({
       `}</style>
       {/* Falling gold coin shower */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        {coins.slice(0, touch ? 20 : coins.length).map((c) => (
+        {coins.map((c) => (
           <div
             key={c.id}
             className="animate-coin-fall absolute top-0"
