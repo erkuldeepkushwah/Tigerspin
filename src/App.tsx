@@ -633,6 +633,7 @@ export default function App() {
           winningLines={winningLines}
           isFullScreen={isFullScreen}
           visible={showWinVisuals}
+          holdLine={winCrush}
         />
 
         {/* Touch Gesture Layer over Reels (Swipe Down to Spin / Tap to Quick-Slam) */}

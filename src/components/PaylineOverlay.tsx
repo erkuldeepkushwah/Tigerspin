@@ -13,6 +13,7 @@ interface PaylineOverlayProps {
   winningLines: WinningLine[];
   isFullScreen: boolean;
   visible: boolean;
+  holdLine: boolean;
 }
 
 function getCellCenter(col: number, row: number): { x: number; y: number } {
@@ -26,13 +27,14 @@ export function PaylineOverlay({
   winningLines,
   isFullScreen,
   visible,
+  holdLine,
 }: PaylineOverlayProps) {
   if (!visible || winningLines.length === 0) return null;
 
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute z-20 overflow-visible"
+      className="pointer-events-none absolute z-[26] overflow-visible"
       style={{
         top: REEL_TOP,
         left: REEL_LEFT,
@@ -68,7 +70,7 @@ export function PaylineOverlay({
           const points = `${p0.x},${p0.y} ${p1.x},${p1.y} ${p2.x},${p2.y}`;
 
           return (
-            <g key={line.lineIndex} className="animate-payline-glow">
+            <g key={line.lineIndex} className={holdLine ? undefined : "animate-payline-glow"}>
               {/* Soft wide gold aura */}
               <polyline
                 points={points}
@@ -79,7 +81,7 @@ export function PaylineOverlay({
                 strokeLinejoin="round"
                 strokeOpacity="0.45"
                 filter="url(#tigerLineGlow)"
-                className="animate-payline-draw"
+                className={holdLine ? undefined : "animate-payline-draw"}
               />
               {/* Crisp bright metallic inner line */}
               <polyline
@@ -89,7 +91,7 @@ export function PaylineOverlay({
                 strokeWidth="5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="animate-payline-draw"
+                className={holdLine ? undefined : "animate-payline-draw"}
               />
               {/* Glowing anchor nodes */}
               {[p0, p1, p2].map((pt, i) => (
@@ -103,7 +105,7 @@ export function PaylineOverlay({
         })}
       </svg>
 
-      {isFullScreen && (
+      {isFullScreen && !holdLine && (
         <div className="animate-overlay-in absolute inset-0 flex items-center justify-center">
           <div className="rounded-2xl border-2 border-[#ffe382] bg-gradient-to-b from-[#6e170a]/95 via-[#430c05]/95 to-[#2b0703]/95 px-7 py-3 shadow-[0_12px_36px_rgba(0,0,0,0.85),0_0_28px_rgba(255,204,51,0.7)]">
             <p className="font-cabinet-display text-center text-[32px] font-black tracking-[0.06em] text-[#fff2a8] drop-shadow-[0_3px_6px_rgba(0,0,0,0.9)]">
