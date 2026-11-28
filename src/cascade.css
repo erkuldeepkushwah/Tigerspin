@@ -25,7 +25,7 @@
   animation: tiger-cascade-sparks 195ms ease-out both;
 }
 @media (prefers-reduced-motion: reduce) {
-  .tiger-cascade-crush, .tiger-cascade-sparks { animation: none !important; }
+  .tiger-respect-motion .tiger-cascade-crush, .tiger-respect-motion .tiger-cascade-sparks { animation: none !important; }
 }
 
 /* Reference: bottom fruit row stays on the board while upper two rows vanish. */
@@ -55,7 +55,7 @@
   animation: tiger-reference-sparkle 250ms ease-out both;
 }
 @media (prefers-reduced-motion: reduce) {
-  .tiger-reference-crush, .tiger-reference-sparkles { animation: none !important; }
+  .tiger-respect-motion .tiger-reference-crush, .tiger-respect-motion .tiger-reference-sparkles { animation: none !important; }
 }
 
 /* Uniform symbol art sizing across stationary and falling tiles. */
@@ -74,7 +74,7 @@
   35% { transform: scale(1.08,.94); opacity: 1; }
   100% { transform: scale(.35); opacity: 0; }
 }
-@media (prefers-reduced-motion: reduce) { .tiger-reference-crush, .tiger-reference-sparkles { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .tiger-respect-motion .tiger-reference-crush, .tiger-respect-motion .tiger-reference-sparkles { animation: none !important; } }
 
 /* Winning payline reveal, then symbol crush before celebration. */
 @keyframes tiger-winning-crush {
@@ -85,7 +85,7 @@
 }
 .tiger-winning-crush { animation: tiger-winning-crush 950ms ease-in-out both; }
 .tiger-winning-sparks { background: radial-gradient(circle, #fff7c7 0 4%, #ffd259 6% 10%, transparent 35%); animation: tiger-cascade-sparks 500ms 420ms ease-out both; }
-@media (prefers-reduced-motion: reduce) { .tiger-winning-crush, .tiger-winning-sparks { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .tiger-respect-motion .tiger-winning-crush, .tiger-respect-motion .tiger-winning-sparks { animation: none !important; } }
 
 /* Keep every cascade visible on touch browsers; use fades instead of travel for reduced motion. */
 .tiger-reel-column { isolation: isolate; }

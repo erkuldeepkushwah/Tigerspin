@@ -12,19 +12,20 @@ interface ReelColumnProps {
   hitCells: Set<string>;
   showWin: boolean;
   winCrush: boolean;
+  fullEffects: boolean;
   onColumnTouchdown: (colIndex: number, hasWild: boolean) => void;
   onColumnSettled: (colIndex: number) => void;
 }
 
 type Phase = 'idle' | 'crush' | 'empty' | 'falling' | 'landed';
 const DROP_COUNT = 5;
-function reducedMotionClass() {
-  return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'tiger-reel-reduced' : '';
+function reducedMotionClass(fullEffects: boolean) {
+  return !fullEffects && typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'tiger-reel-reduced' : '';
 }
 
 export function ReelColumn({
   colIndex, symbols, spinId, turbo, slamSignal, pullOffset,
-  hitCells, showWin, winCrush, onColumnTouchdown, onColumnSettled,
+  hitCells, showWin, winCrush, fullEffects, onColumnTouchdown, onColumnSettled,
 }: ReelColumnProps) {
   const [cells, setCells] = useState<[number, number, number]>(symbols);
   const [incoming, setIncoming] = useState<[number, number, number]>(symbols);
@@ -106,7 +107,7 @@ export function ReelColumn({
   const hideCells = phase === 'empty' || phase === 'falling';
   const quick = turbo || fastRef.current;
   return (
-    <div className={`relative overflow-hidden rounded-[12px] tiger-reel-column ${reducedMotionClass()}`} style={{ width: REEL_WIDTH, height: REEL_HEIGHT }}>
+    <div className={`relative overflow-hidden rounded-[12px] tiger-reel-column ${reducedMotionClass(fullEffects)}`} style={{ width: REEL_WIDTH, height: REEL_HEIGHT }}>
       <div className="pointer-events-none absolute inset-0 z-[5] bg-gradient-to-b from-black/10 via-transparent to-black/15" />
       <div style={{ transform: !busy ? `translateY(${Math.min(38, Math.max(0,pullOffset)) * (0.86 + colIndex * .09)}px)` : undefined }}>
         {cells.map((id, row) => {

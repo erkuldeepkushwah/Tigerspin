@@ -5,6 +5,7 @@ interface WinCelebrationProps {
   tier: 'big' | 'mega' | 'super' | null;
   amount: number;
   autoSpinActive: boolean;
+  fullEffects: boolean;
   onDismiss: () => void;
 }
 
@@ -31,6 +32,7 @@ export function WinCelebration({
   tier,
   amount,
   autoSpinActive,
+  fullEffects,
   onDismiss,
 }: WinCelebrationProps) {
   const [displayAmount, setDisplayAmount] = useState(0);
@@ -73,7 +75,7 @@ export function WinCelebration({
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (reducedMotion) {
+    if (!fullEffects && reducedMotion) {
       setDisplayAmount(amount);
       return;
     }
@@ -96,7 +98,7 @@ export function WinCelebration({
 
     rafId = requestAnimationFrame(step);
     return () => cancelAnimationFrame(rafId);
-  }, [tier, amount]);
+  }, [tier, amount, fullEffects]);
 
   // Auto-dismiss cleanly
   useEffect(() => {
@@ -158,7 +160,7 @@ export function WinCelebration({
           </div>
         </>
       )}
-      <style>{`@keyframes tigerWinDance { 0%,100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-12px) rotate(3deg); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-10px) rotate(-3deg); } } .tiger-win-character { animation: tigerWinDance 1.15s ease-in-out infinite; transform-origin:center bottom; } @keyframes tigerPoseOne{0%,49.99%{opacity:1}50%,100%{opacity:0}} @keyframes tigerPoseTwo{0%,49.99%{opacity:0}50%,100%{opacity:1}} .tiger-pose-one{animation:tigerPoseOne 4s step-end infinite} .tiger-pose-two{animation:tigerPoseTwo 4s step-end infinite} @media(prefers-reduced-motion:reduce){.tiger-win-character,.tiger-pose-one,.tiger-pose-two{animation:none;}.tiger-pose-two{opacity:0;}}`}</style>
+      <style>{`@keyframes tigerWinDance { 0%,100% { transform: translateY(0) rotate(-3deg); } 25% { transform: translateY(-12px) rotate(3deg); } 50% { transform: translateY(0) rotate(3deg); } 75% { transform: translateY(-10px) rotate(-3deg); } } .tiger-win-character { animation: tigerWinDance 1.15s ease-in-out infinite; transform-origin:center bottom; } @keyframes tigerPoseOne{0%,49.99%{opacity:1}50%,100%{opacity:0}} @keyframes tigerPoseTwo{0%,49.99%{opacity:0}50%,100%{opacity:1}} .tiger-pose-one{animation:tigerPoseOne 4s step-end infinite} .tiger-pose-two{animation:tigerPoseTwo 4s step-end infinite} @media(prefers-reduced-motion:reduce){.tiger-respect-motion .tiger-win-character,.tiger-respect-motion .tiger-pose-one,.tiger-respect-motion .tiger-pose-two{animation:none;}.tiger-respect-motion .tiger-pose-two{opacity:0;}}`}</style>
       {/* Decorative firework bursts and falling petals. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         {[{x:12,y:77,d:0},{x:86,y:80,d:.7},{x:88,y:18,d:1.3},{x:15,y:24,d:2}].map((burst,i)=>(
@@ -181,10 +183,10 @@ export function WinCelebration({
         @keyframes tigerGoldenBurst{0%{opacity:.15;transform:scale(.7)}35%{opacity:1;transform:scale(1)}100%{opacity:.35;transform:scale(1.12)}}
         .tiger-golden-amount{animation:tigerAmountGlow 2s ease-in-out infinite}
         @keyframes tigerAmountGlow{0%,100%{filter:drop-shadow(0 0 5px #ffb52a)}50%{filter:drop-shadow(0 0 18px #ffe36b) brightness(1.12)}}
-        @media(prefers-reduced-motion:reduce){.tiger-golden-burst,.tiger-golden-amount{animation:none}}
+        @media(prefers-reduced-motion:reduce){.tiger-respect-motion .tiger-golden-burst,.tiger-respect-motion .tiger-golden-amount{animation:none}}
         @keyframes tigerGlowPulse{0%,100%{opacity:.65}50%{opacity:1}}
         .tiger-celebration-glow{animation:tigerGlowPulse 1.7s ease-in-out infinite}
-        @media(prefers-reduced-motion:reduce){.tiger-win-petal,.tiger-firework-ray{display:none}.tiger-celebration-glow{animation:none}}
+        @media(prefers-reduced-motion:reduce){.tiger-respect-motion .tiger-win-petal,.tiger-respect-motion .tiger-firework-ray{display:none}.tiger-respect-motion .tiger-celebration-glow{animation:none}}
       `}</style>
       {/* Falling gold coin shower */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">

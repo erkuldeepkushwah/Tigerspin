@@ -30,7 +30,7 @@ import {
   type SpinEvaluation,
 } from './game/engine';
 
-function useAnimatedValue(target: number, durationMs = 420): number {
+function useAnimatedValue(target: number, durationMs = 420, fullEffects = true): number {
   const [displayed, setDisplayed] = useState(target);
   const currentRef = useRef(target);
 
@@ -46,7 +46,7 @@ function useAnimatedValue(target: number, durationMs = 420): number {
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (reducedMotion || durationMs <= 0) {
+    if ((!fullEffects && reducedMotion) || durationMs <= 0) {
       currentRef.current = target;
       setDisplayed(target);
       return;
@@ -71,7 +71,7 @@ function useAnimatedValue(target: number, durationMs = 420): number {
 
     rafId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafId);
-  }, [target, durationMs]);
+  }, [target, durationMs, fullEffects]);
 
   return displayed;
 }
@@ -90,6 +90,8 @@ export default function App() {
   const [slamSignal, setSlamSignal] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [autoSpin, setAutoSpin] = useState(false);
+  const [fullEffects, setFullEffects] = useState(() => { try { return localStorage.getItem('tiger-full-effects') !== 'off'; } catch { return true; } });
+  useEffect(() => { try { localStorage.setItem('tiger-full-effects', fullEffects ? 'on' : 'off'); } catch {} }, [fullEffects]);
   const [bonus, setBonus] = useState({ remaining: 0, collected: 0 });
   const bonusRef = useRef({ remaining: 0, collected: 0 });
   const freeSpinRef = useRef(false);
@@ -116,8 +118,8 @@ export default function App() {
   const [scale, setScale] = useState(1);
 
   const bet = BETS[betIndex];
-  const animatedBalance = useAnimatedValue(balance, 440);
-  const animatedWin = useAnimatedValue(lastWin, 520);
+  const animatedBalance = useAnimatedValue(balance, 440, fullEffects);
+  const animatedWin = useAnimatedValue(lastWin, 520, fullEffects);
 
   // Refs for clean async callbacks without stale closures
   const spinningRef = useRef(false);
@@ -166,6 +168,11 @@ export default function App() {
       ASSETS.board,
       ASSETS.mega,
       ASSETS.super,
+      '/assets/tiger/golden-win-background.png',
+      '/assets/tiger/golden-bull.png',
+      '/assets/tiger/dancing-tiger.png',
+      '/assets/tiger/dancing-tiger2.png',
+      '/assets/icons/super-mega-win-assets/gold-coin.svg',
       ...SYMBOLS.map((s) => s.image),
     ];
     urls.forEach((url) => {
@@ -571,7 +578,7 @@ export default function App() {
 
   return (
     <main
-      className={`relative flex h-[100dvh] w-screen items-center justify-center overflow-hidden transition-colors duration-500 ${
+      className={`${fullEffects ? 'tiger-full-effects' : 'tiger-respect-motion'} relative flex h-[100dvh] w-screen items-center justify-center overflow-hidden transition-colors duration-500 ${
         showWinVisuals ? 'tiger-stage-bg-win' : 'tiger-stage-bg'
       }`}
     >
@@ -625,6 +632,7 @@ export default function App() {
               hitCells={hitCells}
               showWin={showWinVisuals}
               winCrush={winCrush}
+              fullEffects={fullEffects}
               onColumnTouchdown={handleColumnTouchdown}
               onColumnSettled={handleColumnSettled}
             />
@@ -809,12 +817,10 @@ export default function App() {
           aria-label={spinning ? 'Quick stop reels' : 'Spin reels'}
           {...bindPress('spin')}
           onClick={triggerSpin}
-          className={`absolute z-30 cursor-pointer rounded-full border-0 bg-transparent transition-transform duration-100 focus-visible:outline-4 focus-visible:outline-[#ffd56b] ${
-            pressedButton === 'spin' ? 'scale-[0.94]' : ''
-          }`}
-          style={HOTSPOTS.spin}
+          className="tiger-spin-button absolute z-30 cursor-pointer rounded-full border-0 bg-transparent touch-manipulation focus-visible:outline-4 focus-visible:outline-[#ffd56b]"
+          style={{ ...HOTSPOTS.spin, touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/spin.png.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[6%] h-[88%] w-[88%] object-contain" />
+          <img src="/assets/icons/Tiger%20Spin%20Icons/spin.png.svg" alt="" draggable={false} className={`pointer-events-none absolute inset-[6%] h-[88%] w-[88%] object-contain transition-transform duration-100 ${pressedButton === 'spin' ? 'scale-[0.94]' : ''}`} />
           {spinning && (
             <span
               aria-hidden="true"
@@ -888,6 +894,7 @@ export default function App() {
           tier={celebration?.tier ?? null}
           amount={celebration?.amount ?? 0}
           autoSpinActive={autoSpin}
+          fullEffects={fullEffects}
           onDismiss={handleDismissCelebration}
         />
       </div>
@@ -898,6 +905,8 @@ export default function App() {
         soundEnabled={soundEnabled}
         turbo={turbo}
         hapticsEnabled={hapticsEnabled}
+        fullEffects={fullEffects}
+        onToggleFullEffects={() => setFullEffects(value => !value)}
         onClose={() => setModal(null)}
         onOpenPaytable={() => {
           soundEngine.playButtonClick(560);

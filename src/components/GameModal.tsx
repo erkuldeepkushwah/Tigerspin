@@ -18,6 +18,8 @@ interface GameModalProps {
   soundEnabled: boolean;
   turbo: boolean;
   hapticsEnabled: boolean;
+  fullEffects: boolean;
+  onToggleFullEffects: () => void;
   onClose: () => void;
   onOpenPaytable: () => void;
   onBackToSettings: () => void;
@@ -35,6 +37,8 @@ export function GameModal({
   soundEnabled,
   turbo,
   hapticsEnabled,
+  fullEffects,
+  onToggleFullEffects,
   onClose,
   onOpenPaytable,
   onBackToSettings,
@@ -187,6 +191,10 @@ export function GameModal({
               </span>
             </button>
 
+            <button type="button" onClick={onToggleFullEffects} aria-pressed={fullEffects} className="flex min-h-[54px] w-full items-center justify-between rounded-2xl border border-[#e7b964]/35 bg-[#36110b] px-4 text-left text-sm font-bold">
+              <span className="flex items-center gap-3"><Sparkles className="h-5 w-5 text-[#ffd56b]" />Full Game Animations</span>
+              <span className="text-xs text-[#ffd56b]">{fullEffects ? 'FULL' : 'SYSTEM'}</span>
+            </button>
             {/* Haptics Toggle */}
             <button
               type="button"

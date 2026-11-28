@@ -253,17 +253,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-win-tile,
-  .animate-shimmer-sweep,
-  .animate-payline-draw,
-  .animate-payline-glow,
-  .animate-spin-orbit,
-  .animate-spin-orbit-fast,
-  .animate-coin-fall,
-  .animate-sparkle-pop,
-  .animate-overlay-in,
-  .animate-banner-pop,
-  .animate-pulse-ring {
+  .tiger-respect-motion .animate-win-tile,
+  .tiger-respect-motion .animate-shimmer-sweep,
+  .tiger-respect-motion .animate-payline-draw,
+  .tiger-respect-motion .animate-payline-glow,
+  .tiger-respect-motion .animate-spin-orbit,
+  .tiger-respect-motion .animate-spin-orbit-fast,
+  .tiger-respect-motion .animate-coin-fall,
+  .tiger-respect-motion .animate-sparkle-pop,
+  .tiger-respect-motion .animate-overlay-in,
+  .tiger-respect-motion .animate-banner-pop,
+  .tiger-respect-motion .animate-pulse-ring {
     animation: none !important;
   }
 }
@@ -301,6 +301,6 @@
   86%, 100% { opacity: 0; transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(.65); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .tiger-crush-symbol { animation: none; }
-  .tiger-shards { display: none; }
+  .tiger-respect-motion .tiger-crush-symbol { animation: none; }
+  .tiger-respect-motion .tiger-shards { display: none; }
 }
