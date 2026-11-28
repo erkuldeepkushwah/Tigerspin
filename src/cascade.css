@@ -78,13 +78,13 @@
 
 /* Winning payline reveal, then symbol crush before celebration. */
 @keyframes tiger-winning-crush {
-  0%, 38% { transform: scale(1); opacity: 1; filter: brightness(1.25); }
-  54% { transform: scale(1.14,.9); opacity: 1; filter: brightness(2); }
-  78% { transform: scale(.55) rotate(9deg); opacity: .45; filter: brightness(2.2); }
+  0%, 55% { transform: scale(1); opacity: 1; filter: brightness(1.12); }
+  66% { transform: scale(1.14,.9); opacity: 1; filter: brightness(1.65); }
+  85% { transform: scale(.55) rotate(9deg); opacity: .45; filter: brightness(1.8); }
   100% { transform: scale(.12); opacity: 0; }
 }
-.tiger-winning-crush { animation: tiger-winning-crush 950ms ease-in-out both; }
-.tiger-winning-sparks { background: radial-gradient(circle, #fff7c7 0 4%, #ffd259 6% 10%, transparent 35%); animation: tiger-cascade-sparks 500ms 420ms ease-out both; }
+.tiger-winning-crush { animation: tiger-winning-crush 1450ms ease-in-out both; }
+.tiger-winning-sparks { background: radial-gradient(circle, #fff7c7 0 4%, #ffd259 6% 10%, transparent 35%); animation: tiger-cascade-sparks 500ms 780ms ease-out both; }
 @media (prefers-reduced-motion: reduce) { .tiger-respect-motion .tiger-winning-crush, .tiger-respect-motion .tiger-winning-sparks { animation: none !important; } }
 
 /* Keep every cascade visible on touch browsers; use fades instead of travel for reduced motion. */
@@ -96,3 +96,14 @@
 .tiger-reel-reduced .tiger-falling-symbol { animation-name: tiger-gentle-drop !important; }
 @keyframes tiger-gentle-drop { from { transform: translate3d(0,-48px,0); opacity: .4; } to { transform: translate3d(0,0,0); opacity: 1; } }
 .tiger-reel-reduced .tiger-reference-crush, .tiger-reel-reduced .tiger-winning-crush { animation: tiger-reduced-crush 120ms linear both !important; }
+
+/* Matched-symbol highlight: warm gold silhouette, readable artwork, muted non-matches. */
+.tiger-unmatched-shade { background: rgba(30,19,11,.34); }
+.tiger-unmatched-symbol { filter: brightness(.56) saturate(.8); }
+.tiger-match-symbol { z-index: 2; }
+.tiger-match-aura { z-index: 1; width: 84%; height: 82%; border-radius: 42% 42% 46% 46%; background: radial-gradient(ellipse at 50% 51%,#fff8bf 0%,#ffe16e 46%,#ffc843 74%,#fff7bb 92%); box-shadow: 0 0 10px 4px #fff4a4, 0 0 20px 7px #ffc752, inset 0 0 9px #fffde4; }
+.tiger-match-aura::before,.tiger-match-aura::after { content: ''; position: absolute; top: -3%; width: 29%; height: 30%; border-radius: 50%; background: #ffe995; box-shadow: 0 0 8px #fff5ac; z-index: -1; }
+.tiger-match-aura::before { left: 0; } .tiger-match-aura::after { right: 0; }
+@keyframes tiger-match-reveal { 0% { opacity: .65; } 16%,55% { opacity: 1; } 72% { opacity: .9; } 100% { opacity: .28; } }
+.tiger-match-aura-crush { animation: tiger-match-reveal 1450ms ease-in-out both; }
+@media (prefers-reduced-motion: reduce) { .tiger-respect-motion .tiger-match-aura-crush { animation: none; } }

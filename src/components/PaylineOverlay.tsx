@@ -57,9 +57,9 @@ export function PaylineOverlay({
             </feMerge>
           </filter>
           <linearGradient id="tigerGoldStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#ffae19" />
-            <stop offset="50%" stopColor="#fff7b8" />
-            <stop offset="100%" stopColor="#ffae19" />
+            <stop offset="0%" stopColor="#ffe6a0" />
+            <stop offset="50%" stopColor="#fffef1" />
+            <stop offset="100%" stopColor="#ffe6a0" />
           </linearGradient>
         </defs>
 
@@ -88,7 +88,7 @@ export function PaylineOverlay({
                 points={points}
                 fill="none"
                 stroke="url(#tigerGoldStroke)"
-                strokeWidth="5"
+                strokeWidth="4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className={holdLine ? undefined : "animate-payline-draw"}

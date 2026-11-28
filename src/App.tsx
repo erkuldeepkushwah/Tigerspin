@@ -356,7 +356,7 @@ export default function App() {
           celebrationTimerRef.current = window.setTimeout(() => {
             celebrationTimerRef.current = null;
             setCelebration({ tier, amount });
-          }, 1100);
+          }, 1600);
           // Auto-spin will resume cleanly when celebration dismisses
           return;
         }

@@ -117,12 +117,13 @@ export function ReelColumn({
           const crushing = phase === 'crush';
           return (
             <div key={row} className="relative flex items-center justify-center overflow-hidden" style={{ height: TILE_HEIGHT, '--crush-duration': quick ? '110ms' : '150ms' } as React.CSSProperties}>
-              {won && <div className="pointer-events-none absolute inset-2 rounded-xl border-2 border-[#ffe27a] bg-amber-300/15 shadow-[0_0_25px_#ffd65c]" />}
+              {!busy && showWin && !won && <div aria-hidden="true" className="tiger-unmatched-shade pointer-events-none absolute inset-0" />}
+              {won && <div aria-hidden="true" className={`tiger-match-aura pointer-events-none absolute ${winCrush ? 'tiger-match-aura-crush' : ''}`} /> }
               {!invisible && (
                 <img
                   key={`${row}-${id}`}
                   src={symbol.image} alt={symbol.label} draggable={false}
-                  className={`relative tiger-reel-icon object-contain ${crushing ? 'tiger-reference-crush' : ''} ${won ? (winCrush ? 'tiger-winning-crush' : 'animate-win-tile') : ''} ${!busy && showWin && !won ? 'opacity-50' : ''}`}
+                  className={`relative tiger-reel-icon object-contain ${crushing ? 'tiger-reference-crush' : ''} ${won ? (winCrush ? 'tiger-winning-crush' : 'animate-win-tile') : ''} ${won ? 'tiger-match-symbol' : !busy && showWin ? 'tiger-unmatched-symbol' : ''}`}
                 />
               )}
               {won && winCrush && <div className="tiger-winning-sparks pointer-events-none absolute inset-0" />}
