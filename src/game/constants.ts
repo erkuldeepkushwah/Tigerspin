@@ -39,7 +39,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Mandarin',
     weight: 7,
     rate: 2,
-    image: '/assets/icons/Tiger%20Spin%20Icons/orange.png.svg',
+    image: '/assets/icons/orange-fruit.png',
   },
   {
     id: 1,
@@ -55,7 +55,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Red Packet',
     weight: 5,
     rate: 4,
-    image: '/assets/icons/Tiger%20Spin%20Icons/red_envelopes.png.svg',
+    image: '/assets/icons/red-lucky-envelope.png',
   },
   {
     id: 3,
@@ -63,7 +63,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Firecracker',
     weight: 5,
     rate: 3,
-    image: '/assets/icons/Tiger%20Spin%20Icons/firecrackers.png.svg',
+    image: '/assets/icons/blue-firecrackers.png',
   },
   {
     id: 4,
@@ -71,7 +71,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Gold Pouch',
     weight: 4,
     rate: 5,
-    image: '/assets/icons/Tiger%20Spin%20Icons/fortune_bag.png.svg',
+    image: '/assets/icons/golden-coin-bag.png',
   },
   {
     id: 5,
@@ -79,7 +79,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Tiger Wild',
     weight: 1,
     rate: 50,
-    image: '/assets/icons/Tiger%20Spin%20Icons/wild_tiger.png.svg',
+    image: '/assets/icons/wild-tiger.png',
     isWild: true,
   },
 ] as const;
