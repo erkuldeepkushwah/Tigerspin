@@ -168,6 +168,8 @@ export default function App() {
       ASSETS.board,
       ASSETS.topBackground,
       ASSETS.topTiger,
+      '/assets/icons/back_icon.png',
+      '/assets/icons/settings_icon.png',
       ASSETS.mega,
       ASSETS.super,
       '/assets/tiger/golden-win-background.png',
@@ -744,7 +746,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.pause}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/exit.png.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
+          <img src="/assets/icons/back_icon.png" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
         </button>
 
         {/* Settings Button */}
@@ -764,7 +766,7 @@ export default function App() {
           }`}
           style={HOTSPOTS.settings}
         >
-          <img src="/assets/icons/Tiger%20Spin%20Icons/settings.png.svg" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
+          <img src="/assets/icons/settings_icon.png" alt="" draggable={false} className="pointer-events-none absolute inset-[8%] h-[84%] w-[84%] object-contain" />
         </button>
 
         {/* Turbo Toggle Button */}
