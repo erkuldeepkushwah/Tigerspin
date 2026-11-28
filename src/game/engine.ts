@@ -96,7 +96,7 @@ export function evaluateGrid(grid: Grid, bet: number): SpinEvaluation {
   const isFullScreen = wildCount === 9;
 
   if (isFullScreen && multiplier > 0) {
-    multiplier *= 10;
+    multiplier = 250;
   }
 
   const totalWin = Math.round(multiplier * bet * 100) / 100;
