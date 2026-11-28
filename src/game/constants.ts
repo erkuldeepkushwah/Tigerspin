@@ -47,7 +47,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Jade Charm',
     weight: 4,
     rate: 8,
-    image: '/assets/icons/Tiger%20Spin%20Icons/jade_scepter.png.svg',
+    image: '/assets/icons/Jade%20Charm.png',
   },
   {
     id: 2,
@@ -79,7 +79,7 @@ export const SYMBOLS: readonly SymbolDef[] = [
     label: 'Tiger Wild',
     weight: 1,
     rate: 50,
-    image: '/assets/icons/wild-tiger.png',
+    image: '/assets/icons/wild_tiger_transparent_50kb.png',
     isWild: true,
   },
 ] as const;
