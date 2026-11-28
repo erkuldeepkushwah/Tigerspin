@@ -28,6 +28,66 @@ interface SparkleParticle {
   delay: number;
 }
 
+function CelebrationFrame() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 674 700" className="pointer-events-none absolute left-0 w-full" style={{top:370,height:700}}>
+      <defs>
+        <linearGradient id="winFrameGold" x1="0" y1="0" x2="0" y2="1">
+          <stop stopColor="#fff5ad"/><stop offset=".28" stopColor="#f7c449"/><stop offset=".53" stopColor="#ac580b"/><stop offset=".75" stopColor="#ffdf76"/><stop offset="1" stopColor="#95500a"/>
+        </linearGradient>
+        <linearGradient id="winFrameRed" x2="0" y2="1"><stop stopColor="#e93b29"/><stop offset="1" stopColor="#8d101a"/></linearGradient>
+        <radialGradient id="winFrameLight"><stop stopColor="#fffcc2" stopOpacity=".95"/><stop offset=".7" stopColor="#ffdc5d" stopOpacity=".65"/><stop offset="1" stopColor="#ffac35" stopOpacity="0"/></radialGradient>
+        <pattern id="winFrameWaves" width="42" height="21" patternUnits="userSpaceOnUse"><path d="M-21 21Q0 -1 21 21T63 21 M-21 14Q0 -8 21 14T63 14" fill="none" stroke="#ffad47" strokeWidth="1.5" opacity=".34"/></pattern>
+      </defs>
+      <ellipse cx="337" cy="332" rx="330" ry="325" fill="url(#winFrameLight)"/>
+      <ellipse cx="337" cy="332" rx="306" ry="299" fill="none" stroke="#ffdb70" strokeWidth="5" opacity=".5"/>
+      <g strokeLinejoin="round">
+        <path d="M23 49Q42 92 100 92H219L249 68H425L455 92H574Q632 92 651 49L660 88Q650 134 603 142H71Q24 134 14 88Z" fill="url(#winFrameRed)" stroke="#79400a" strokeWidth="15"/>
+        <path d="M23 49Q42 92 100 92H219L249 68H425L455 92H574Q632 92 651 49L660 88Q650 134 603 142H71Q24 134 14 88Z" fill="url(#winFrameWaves)" stroke="url(#winFrameGold)" strokeWidth="9"/>
+        <path d="M28 558Q44 536 78 536H218L247 557H427L456 536H596Q630 536 646 558L658 595Q638 583 599 583H457L425 612H249L217 583H75Q36 583 16 595Z" fill="url(#winFrameRed)" stroke="#79400a" strokeWidth="15"/>
+        <path d="M28 558Q44 536 78 536H218L247 557H427L456 536H596Q630 536 646 558L658 595Q638 583 599 583H457L425 612H249L217 583H75Q36 583 16 595Z" fill="url(#winFrameWaves)" stroke="url(#winFrameGold)" strokeWidth="9"/>
+        <path d="M282 548H392L423 608L392 668H282L251 608Z" fill="url(#winFrameRed)" stroke="#79400a" strokeWidth="14"/>
+        <path d="M282 548H392L423 608L392 668H282L251 608Z" fill="url(#winFrameWaves)" stroke="url(#winFrameGold)" strokeWidth="8"/>
+      </g>
+      <g fill="none" stroke="#ffe18a" strokeWidth="5" strokeLinecap="round"><path d="M31 73Q65 111 124 110M643 73Q609 111 550 110M38 573Q85 551 142 555M636 573Q589 551 532 555"/></g>
+      <text x="337" y="631" fontSize="62" textAnchor="middle" fontFamily="serif" fontWeight="bold" fill="#ffe594">虎</text>
+    </svg>
+  );
+}
+
+function WinLettering({ tier, value }: { tier: 'big' | 'mega' | 'super'; value: number }) {
+  const amountText = value.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: false });
+  const amountWidth = Math.min(552, Math.max(180, amountText.length * 75));
+  const title = tier === 'big' ? ['BIG WIN'] : tier === 'mega' ? ['MEGA WIN'] : ['SUPER', 'MEGA WIN'];
+  const titleTop = tier === 'super' ? 510 : 560;
+  const amountTop = tier === 'super' ? 735 : 680;
+  return (
+    <>
+      <svg aria-hidden="true" viewBox="0 0 674 230" className="pointer-events-none absolute left-0 w-full overflow-visible" style={{top:titleTop,height:230}}>
+        <defs><linearGradient id="winTitleMetal" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#fffac6"/><stop offset=".3" stopColor="#ffe47b"/><stop offset=".64" stopColor="#ffb735"/><stop offset="1" stopColor="#e37c14"/></linearGradient></defs>
+        {title.map((line, index) => {
+          const y=90+index*100;
+          const width=line === 'SUPER' ? 360 : line === 'BIG WIN' ? 450 : 530;
+          const props={x:337,y,textAnchor:'middle' as const,textLength:width,lengthAdjust:'spacingAndGlyphs' as const,fontFamily:'Impact, Arial Black, system-ui, sans-serif',fontWeight:1000,fontStyle:'italic' as const,fontSize:100,strokeLinejoin:'round' as const};
+          return <g key={line}><text {...props} y={y+7} fill="#57236f" stroke="#4a185f" strokeWidth="12">{line}</text><text {...props} fill="#ffe7a1" stroke="#fff0bc" strokeWidth="11">{line}</text><text {...props} fill="url(#winTitleMetal)" stroke="#71309b" strokeWidth="7" paintOrder="stroke fill">{line}</text></g>;
+        })}
+      </svg>
+      <svg aria-hidden="true" viewBox="0 0 674 150" className="tiger-golden-amount pointer-events-none absolute left-0 w-full overflow-visible" style={{top:amountTop,height:150}}>
+        <defs>
+          <linearGradient id="winAmountMetal" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#fffbd2"/><stop offset=".28" stopColor="#fff0a0"/><stop offset=".57" stopColor="#ffc43e"/><stop offset="1" stopColor="#f29b1e"/></linearGradient>
+          <pattern id="winAmountStripes" width="46" height="42" patternUnits="userSpaceOnUse"><path d="M0 5Q17 11 25 3L14 16Z M32 24Q15 30 8 22L16 37Z" fill="#9b3d12" opacity=".65"/></pattern>
+        </defs>
+        <g textAnchor="middle" fontFamily="Georgia, Times New Roman, serif" fontWeight="900" fontStyle="italic" fontSize="112" strokeLinejoin="round">
+          <text x="337" y="120" textLength={amountWidth} lengthAdjust="spacingAndGlyphs" fill="#9c2109" stroke="#711b0c" strokeWidth="13">{amountText}</text>
+          <text x="337" y="109" textLength={amountWidth} lengthAdjust="spacingAndGlyphs" fill="#fff2a8" stroke="#ffdf79" strokeWidth="12">{amountText}</text>
+          <text x="337" y="109" textLength={amountWidth} lengthAdjust="spacingAndGlyphs" fill="url(#winAmountMetal)" stroke="#ae2c12" strokeWidth="7" paintOrder="stroke fill">{amountText}</text>
+          <text x="337" y="109" textLength={amountWidth} lengthAdjust="spacingAndGlyphs" fill="url(#winAmountStripes)">{amountText}</text>
+        </g>
+      </svg>
+    </>
+  );
+}
+
 export function WinCelebration({
   tier,
   amount,
@@ -142,10 +202,10 @@ export function WinCelebration({
       />
 
       <div aria-hidden="true" className="tiger-celebration-glow pointer-events-none absolute inset-0" style={{background:'radial-gradient(ellipse at 50% 45%,rgba(255,215,65,.35),transparent 60%),radial-gradient(ellipse at 15% 82%,rgba(255,110,20,.5),transparent 30%),radial-gradient(ellipse at 85% 82%,rgba(255,110,20,.5),transparent 30%)'}} />
+      <CelebrationFrame />
       {tier === 'big' ? (
         <div className="pointer-events-none absolute inset-0">
           
-          <div className="absolute left-0 top-[35%] w-full text-center font-black italic text-[100px] leading-none" style={{color:'#ffe583',WebkitTextStroke:'4px #087c9d',paintOrder:'stroke fill',textShadow:'0 8px 0 #07526a'}}>BIG WIN</div>
           <img src="/assets/tiger/golden-bull.png" alt="" draggable={false} className="tiger-win-character absolute left-[17%] top-[69%] h-[21%] w-[66%] object-contain" />
         </div>
       ) : (
@@ -154,9 +214,6 @@ export function WinCelebration({
           <div className="tiger-win-character pointer-events-none absolute left-[16%] top-[17%] h-[25%] w-[68%]">
             <img src="/assets/tiger/dancing-tiger.png" alt="" draggable={false} className="tiger-pose-one absolute inset-0 h-full w-full object-contain" />
             <img src="/assets/tiger/dancing-tiger2.png" alt="" draggable={false} className="tiger-pose-two absolute inset-0 h-full w-full object-contain" />
-          </div>
-          <div className="pointer-events-none absolute left-[4%] top-[42%] w-[92%] text-center font-black italic leading-[.93]" style={{fontSize:tier === 'super'?88:100,color:'#ffe294',WebkitTextStroke:'5px #7230a3',paintOrder:'stroke fill',textShadow:'0 7px 0 #54217a,0 0 14px #ffcf70'}}>
-            {tier === 'super' ? <>SUPER<br/>MEGA WIN</> : 'MEGA WIN'}
           </div>
         </>
       )}
@@ -237,13 +294,7 @@ export function WinCelebration({
         ))}
       </div>
 
-      {/* Animated winning amount aligned precisely to original artwork slot (top: 729px) */}
-      <div
-        className="tiger-golden-amount tiger-prize-amount font-cabinet-serif pointer-events-none absolute left-0 w-full text-center text-[56px] font-black leading-none tracking-tight"
-        style={tier === 'big' ? {top: 680, fontSize: 100, fontStyle:'italic', color:'#ffe17a', WebkitTextStroke:'3px #9c2309', textShadow:'0 6px 0 #9c2309'} : {top:790,fontSize:100,fontStyle:'italic',color:'#ffe177',WebkitTextStroke:'3px #a3220c',textShadow:'0 7px 0 #a3220c'}}
-      >
-        {formatINR(displayAmount)}
-      </div>
+      <WinLettering tier={tier} value={displayAmount} />
 
       {/* Subtle tap-to-continue cue */}
       <div
