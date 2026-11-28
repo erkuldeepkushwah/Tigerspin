@@ -106,8 +106,9 @@ export function PaylineOverlay({
       {isFullScreen && (
         <div className="animate-overlay-in absolute inset-0 flex items-center justify-center">
           <div className="rounded-2xl border-2 border-[#ffe382] bg-gradient-to-b from-[#6e170a]/95 via-[#430c05]/95 to-[#2b0703]/95 px-7 py-3 shadow-[0_12px_36px_rgba(0,0,0,0.85),0_0_28px_rgba(255,204,51,0.7)]">
-            <p className="font-cabinet-display text-center text-[32px] font-black tracking-[0.06em] text-[#fff2a8] drop-shadow-[0_3px_6px_rgba(0,0,0,0.9)]">
-              ×10 FULL SCREEN!
+            <p className="font-cabinet-display flex items-center justify-center gap-2 text-center text-[32px] font-black tracking-[0.06em] text-[#fff2a8] drop-shadow-[0_3px_6px_rgba(0,0,0,0.9)]">
+              <img src="/assets/tiger-spin-svg/18-multiplier.svg" alt="×10" className="h-14 w-14" />
+              FULL SCREEN!
             </p>
           </div>
         </div>
