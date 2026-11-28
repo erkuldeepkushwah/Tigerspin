@@ -24,6 +24,8 @@ export interface SpinEvaluation {
   winningLines: WinningLine[];
   hitCells: Set<string>;
   isFullScreen: boolean;
+  wildCount: number;
+  hasWildLine: boolean;
   celebrationTier: 'super' | 'mega' | 'big' | null;
 }
 
@@ -60,10 +62,8 @@ export function evaluateGrid(grid: Grid, bet: number): SpinEvaluation {
   for (const line of PAYLINES) {
     const [r0, r1, r2] = line.rows;
     const cells = [grid[0][r0], grid[1][r1], grid[2][r2]];
-    const nonWild = cells.filter((id) => id !== WILD_ID);
-
-    if (nonWild.length === 0 || nonWild.every((id) => id === nonWild[0])) {
-      const symbolId = nonWild.length > 0 ? nonWild[0] : WILD_ID;
+    if (cells.every((id) => id === cells[0])) {
+      const symbolId = cells[0];
       const rate = SYMBOLS[symbolId].rate;
       multiplier += rate;
       winningLines.push({
@@ -80,9 +80,9 @@ export function evaluateGrid(grid: Grid, bet: number): SpinEvaluation {
   }
 
   const flat = [...grid[0], ...grid[1], ...grid[2]];
-  const nonWildAll = flat.filter((id) => id !== WILD_ID);
-  const isFullScreen =
-    nonWildAll.length === 0 || nonWildAll.every((id) => id === nonWildAll[0]);
+  const wildCount = flat.filter((id) => id === WILD_ID).length;
+  const hasWildLine = winningLines.some((line) => line.symbolId === WILD_ID);
+  const isFullScreen = wildCount === 9;
 
   if (isFullScreen && multiplier > 0) {
     multiplier *= 10;
@@ -90,7 +90,7 @@ export function evaluateGrid(grid: Grid, bet: number): SpinEvaluation {
 
   const totalWin = Math.round(multiplier * bet * 100) / 100;
   const celebrationTier =
-    multiplier >= 12 ? 'super' : multiplier >= 5 ? 'mega' : multiplier > 0 ? 'big' : null;
+    isFullScreen ? 'super' : hasWildLine ? 'mega' : multiplier > 0 ? 'big' : null;
 
   return {
     multiplier,
@@ -98,6 +98,8 @@ export function evaluateGrid(grid: Grid, bet: number): SpinEvaluation {
     winningLines,
     hitCells,
     isFullScreen,
+    wildCount,
+    hasWildLine,
     celebrationTier,
   };
 }

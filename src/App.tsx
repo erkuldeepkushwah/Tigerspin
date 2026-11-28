@@ -90,6 +90,10 @@ export default function App() {
   const [slamSignal, setSlamSignal] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [autoSpin, setAutoSpin] = useState(false);
+  const [bonus, setBonus] = useState({ remaining: 0, collected: 0 });
+  const bonusRef = useRef({ remaining: 0, collected: 0 });
+  const freeSpinRef = useRef(false);
+  const celebrationOpenRef = useRef(false);
 
   const [lastWin, setLastWin] = useState(0);
   const [evaluation, setEvaluation] = useState<SpinEvaluation | null>(null);
@@ -206,7 +210,7 @@ export default function App() {
     soundEngine.unlock();
     clearAutoTimer();
 
-    if (modalRef.current !== null) return;
+    if (modalRef.current !== null || celebrationOpenRef.current) return;
 
     // If currently spinning, tapping spin acts as instant quick-slam!
     if (spinningRef.current) {
@@ -216,7 +220,8 @@ export default function App() {
     }
 
     const currentBet = betRef.current;
-    if (balanceRef.current < currentBet) {
+    const free = bonusRef.current.remaining > 0;
+    if (!free && balanceRef.current < currentBet) {
       setAutoSpin(false);
       setModal('lowBalance');
       updateBanner('Add demo credits or lower bet');
@@ -224,7 +229,8 @@ export default function App() {
       return;
     }
 
-    const nextBalance = Math.round((balanceRef.current - currentBet) * 100) / 100;
+    freeSpinRef.current = free;
+    const nextBalance = free ? balanceRef.current : Math.round((balanceRef.current - currentBet) * 100) / 100;
     const nextGrid = generateSpinGrid();
     const nextEval = evaluateGrid(nextGrid, currentBet);
 
@@ -242,7 +248,7 @@ export default function App() {
     setSpinId((id) => id + 1);
 
     updateBanner(
-      autoSpinRef.current
+      free ? `FREE SPIN ${11 - bonusRef.current.remaining}/10` : autoSpinRef.current
         ? turboRef.current
           ? 'Auto Turbo spinning...'
           : 'Auto spinning...'
@@ -289,6 +295,24 @@ export default function App() {
       pendingEvalRef.current = null;
       if (!res) return;
 
+      const previous = bonusRef.current;
+      let next = previous;
+      if (freeSpinRef.current) {
+        const collected = Math.min(9, previous.collected + res.wildCount);
+        const remaining = Math.max(0, previous.remaining - 1);
+        if (collected === 9 && !res.isFullScreen) {
+          // Use the existing full-Wild payout for the collection reward.
+          const jackpot = evaluateGrid([[5,5,5],[5,5,5],[5,5,5]], betRef.current);
+          res.totalWin += jackpot.totalWin;
+          res.multiplier += jackpot.multiplier;
+          res.celebrationTier = 'super';
+        }
+        next = { remaining, collected: collected === 9 || remaining === 0 ? 0 : collected };
+      } else if (res.hasWildLine && !res.isFullScreen) {
+        next = { remaining: 10, collected: 0 };
+      }
+      bonusRef.current = next;
+      setBonus(next);
       setEvaluation(res);
 
       if (res.totalWin > 0) {
@@ -313,6 +337,7 @@ export default function App() {
         }
 
         if (res.celebrationTier) {
+          celebrationOpenRef.current = true;
           setCelebration({
             tier: res.celebrationTier,
             amount: res.totalWin,
@@ -335,6 +360,7 @@ export default function App() {
   );
 
   const handleDismissCelebration = useCallback(() => {
+    celebrationOpenRef.current = false;
     setCelebration(null);
     if (autoSpinRef.current) {
       scheduleNextAutoSpin(turboRef.current ? 300 : 520);
@@ -361,7 +387,7 @@ export default function App() {
   const stepBet = useCallback(
     (delta: number) => {
       soundEngine.unlock();
-      if (spinningRef.current) return;
+      if (spinningRef.current || bonusRef.current.remaining > 0 || celebrationOpenRef.current) return;
       setBetIndex((prev) => {
         const next = Math.max(0, Math.min(BETS.length - 1, prev + delta));
         if (next !== prev) {
@@ -508,6 +534,8 @@ export default function App() {
   const handleResetBalance = useCallback(() => {
     soundEngine.playButtonClick(520);
     setBalance(DEFAULT_BALANCE);
+    bonusRef.current = { remaining: 0, collected: 0 };
+    setBonus(bonusRef.current);
     setLastWin(0);
     setShowWinVisuals(false);
     updateBanner(`Demo balance reset to ${formatINR(DEFAULT_BALANCE)}`);
@@ -625,7 +653,7 @@ export default function App() {
             width: 574,
           }}
         >
-          {bannerText}
+          {bonus.remaining > 0 ? `FREE SPINS: ${bonus.remaining}/10 · WILD: ${bonus.collected}/9` : bannerText}
         </div>
 
         {/* Uploaded wallet and gold ingot decorations */}
@@ -747,7 +775,7 @@ export default function App() {
         <button
           type="button"
           aria-label="Decrease bet"
-          disabled={spinning || betIndex === 0}
+          disabled={spinning || bonus.remaining > 0 || betIndex === 0}
           {...bindPress('minus')}
           onClick={() => stepBet(-1)}
           className={`absolute z-30 cursor-pointer rounded-full border-0 bg-transparent transition-transform duration-100 disabled:cursor-not-allowed focus-visible:outline-4 focus-visible:outline-[#ffd56b] ${
@@ -792,7 +820,7 @@ export default function App() {
         <button
           type="button"
           aria-label="Increase bet"
-          disabled={spinning || betIndex === BETS.length - 1}
+          disabled={spinning || bonus.remaining > 0 || betIndex === BETS.length - 1}
           {...bindPress('plus')}
           onClick={() => stepBet(1)}
           className={`absolute z-30 cursor-pointer rounded-full border-0 bg-transparent transition-transform duration-100 disabled:cursor-not-allowed focus-visible:outline-4 focus-visible:outline-[#ffd56b] ${
