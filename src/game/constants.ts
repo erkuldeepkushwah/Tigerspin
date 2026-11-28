@@ -1,6 +1,6 @@
 export interface SymbolDef {
   id: number;
-  key: 'orange' | 'jade' | 'packet' | 'cracker' | 'bag' | 'wild';
+  key: 'orange' | 'jade' | 'packet' | 'cracker' | 'bag' | 'wild' | 'egg';
   label: string;
   weight: number;
   rate: number;
@@ -81,6 +81,14 @@ export const SYMBOLS: readonly SymbolDef[] = [
     rate: 50,
     image: '/assets/icons/wild_tiger_transparent_50kb.png',
     isWild: true,
+  },
+  {
+    id: 6,
+    key: 'egg',
+    label: 'Golden Egg',
+    weight: 4,
+    rate: 6,
+    image: '/assets/icons/golden_egg_icon.png',
   },
 ] as const;
 
